@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ชำระเงิน - หมูกระทะย่างให้</title>
+    <style>
+        body { font-family: 'Tahoma', sans-serif; background-color: #fdf2e9; margin: 0; padding: 0; text-align: center; }
+        
+        nav { background-color: #d32f2f; padding: 15px; display: flex; justify-content: center; gap: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 18px; }
+        nav a:hover { text-decoration: underline; }
+
+        .container { background: white; max-width: 500px; margin: 30px auto; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: left; }
+        
+        .logo-checkout-container { text-align: center; margin-bottom: 15px; }
+        .logo-checkout { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #d32f2f; box-shadow: 0 4px 8px rgba(0,0,0,0.12); }
+
+        h2 { color: #d32f2f; text-align: center; margin-top: 5px; margin-bottom: 20px; }
+        
+        ul { list-style: none; padding: 0; }
+        li { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; }
+        
+        .total-box { font-size: 20px; font-weight: bold; color: #d32f2f; text-align: right; margin-top: 15px; }
+        
+        .form-group { margin-top: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: 'Tahoma', sans-serif; }
+        
+        .btn-order { background-color: #2e7d32; color: white; border: none; padding: 14px; width: 100%; font-size: 18px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 20px; }
+        .btn-order:hover { background-color: #1b5e20; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">🏠 Home</a>
+        <a href="products.html">🍖 Menu</a>
+        <a href="checkout.html">🛒 Cart & Checkout</a>
+        <a href="admin.html">⚙️ Admin</a>
+    </nav>
+
+    <div class="container">
+        <div class="logo-checkout-container">
+            <img src="logo.jpg" alt="โลโก้ร้านหมูกระทะย่างให้" class="logo-checkout">
+        </div>
+
+        <h2>🛒 สรุปรายการคำสั่งซื้อ</h2>
+        <ul id="checkout-list">
+            <li style="color: #888;">ไม่มีสินค้าในตะกร้า</li>
+        </ul>
+        <div class="total-box">ราคารวมทั้งหมด: <span id="checkout-total">0</span> บาท</div>
+
+        <div class="form-group">
+            <label>👤 ชื่อ-นามสกุล ผู้รับ:</label>
+            <input type="text" id="cust-name" placeholder="กรอกชื่อของคุณ">
+        </div>
+        <div class="form-group">
+            <label>📞 เบอร์โทรศัพท์:</label>
+            <input type="text" id="cust-phone" placeholder="เบอร์โทรติดต่อ">
+        </div>
+        <div class="form-group">
+            <label>📍 ที่อยู่จัดส่ง:</label>
+            <textarea id="cust-address" rows="3" placeholder="บ้านเลขที่, ซอย, ถนน, แขวง/ตำบล"></textarea>
+        </div>
+
+        <button class="btn-order" onclick="submitOrder()">✅ ยืนยันการสั่งซื้อ</button>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const listEl = document.getElementById('checkout-list');
+        const totalEl = document.getElementById('checkout-total');
+        
+        let total = 0;
+        if (cart.length === 0) {
+            listEl.innerHTML = '<li style="color: #888;">ไม่มีสินค้าในตะกร้า</li>';
+        } else {
+            listEl.innerHTML = '';
+            cart.forEach(item => {
+                total += item.price;
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${item.name}</span> <span>${item.price} บาท</span>`;
+                listEl.appendChild(li);
+            });
+        }
+        totalEl.textContent = total;
+
+        function submitOrder() {
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value;
+
+            if (!name || !phone || !address) {
+                alert('กรุณากรอกข้อมูลชื่อ เบอร์โทร และที่อยู่ให้ครบถ้วนครับ!');
+                return;
+            }
+
+            if (cart.length === 0) {
+                alert('ยังไม่มีสินค้าในตะกร้า กรุณาเลือกสินค้าก่อนครับ!');
+                return;
+            }
+
+            // สร้างข้อมูลออเดอร์ใหม่เพื่อส่งไปเก็บในหน้า Admin
+            const newOrder = {
+                name: name,
+                phone: phone,
+                address: address,
+                items: cart,
+                totalPrice: total,
+                status: 'รอดำเนินการ (กำลังย่าง)'
+            };
+
+            // ดึงออเดอร์เก่ามาต่อกับออเดอร์ใหม่
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(newOrder);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            alert('🎉 สั่งซื้อสำเร็จ! ขอบคุณที่อุดหนุนหมูกระทะย่างให้ครับ');
+            localStorage.removeItem('cart'); // ล้างตะกร้าหลังสั่งซื้อสำเร็จ
+            window.location.href = 'admin.html'; // พาแอดมินหรือลูกค้าไปหน้าแดชบอร์ดดูออเดอร์ได้ทันที
+        }
+    </script>
+
+</body>
+</html>

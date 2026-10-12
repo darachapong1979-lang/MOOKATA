@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจัดการหลังบ้าน (Admin) - หมูกระทะย่างให้</title>
+    <style>
+        body { font-family: 'Tahoma', sans-serif; background-color: #fdf2e9; margin: 0; padding: 0; }
+        
+        nav { background-color: #d32f2f; padding: 15px; display: flex; justify-content: center; gap: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 18px; }
+        nav a:hover { text-decoration: underline; }
+
+        .container { max-width: 900px; margin: 30px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { color: #d32f2f; text-align: center; margin-bottom: 20px; }
+
+        .stats-box { display: flex; justify-content: space-around; margin-bottom: 25px; }
+        .stat-card { background: #fff8e1; border-left: 5px solid #ff9800; padding: 15px; border-radius: 8px; width: 40%; text-align: center; }
+        .stat-card h3 { margin: 0; color: #d32f2f; font-size: 22px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 14px; }
+        th { background-color: #d32f2f; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+
+        .btn-action { background-color: #d32f2f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .btn-action:hover { background-color: #b71c1c; }
+        .btn-clear { background-color: #757575; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
+        .btn-clear:hover { background-color: #424242; }
+
+        .status-badge { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">🏠 Home</a>
+        <a href="products.html">🛒 Menu</a>
+        <a href="checkout.html">📦 Cart & Checkout</a>
+        <a href="admin.html" style="background: #b71c1c; padding: 2px 10px; border-radius: 4px;">⚙️ Admin Dashboard</a>
+    </nav>
+
+    <div class="container">
+        <h2>⚙️ ระบบจัดการหลังบ้าน (รายการสั่งซื้อของลูกค้า)</h2>
+        
+        <div class="stats-box">
+            <div class="stat-card">
+                <p>จำนวนออเดอร์ทั้งหมด</p>
+                <h3 id="total-orders">0</h3>
+            </div>
+            <div class="stat-card" style="border-left-color: #4caf50;">
+                <p>ยอดขายรวมทั้งหมด</p>
+                <h3 id="total-sales">0 บาท</h3>
+            </div>
+        </div>
+
+        <button class="btn-clear" onclick="clearAllOrders()">🗑️ ล้างประวัติออเดอร์ทั้งหมด</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#ออเดอร์</th>
+                    <th>ชื่อผู้รับ / เบอร์โทร</th>
+                    <th>รายการสินค้า</th>
+                    <th>ที่อยู่จัดส่ง</th>
+                    <th>ราคารวม</th>
+                    <th>สถานะ</th>
+                    <th>จัดการ</th>
+                </tr>
+            </thead>
+            <tbody id="order-table-body">
+                <tr>
+                    <td colspan="7" style="text-align: center; color: #888;">ยังไม่มีรายการสั่งซื้อเข้ามา...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const tbody = document.getElementById('order-table-body');
+            const totalOrdersEl = document.getElementById('total-orders');
+            const totalSalesEl = document.getElementById('total-sales');
+
+            tbody.innerHTML = '';
+            let totalSales = 0;
+
+            totalOrdersEl.textContent = orders.length;
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #888;">ยังไม่มีรายการสั่งซื้อเข้ามา...</td></tr>`;
+                totalSalesEl.textContent = '0 บาท';
+                return;
+            }
+
+            orders.forEach((order, index) => {
+                totalSales += order.totalPrice;
+
+                // จัดการรายชื่อสินค้าให้แสดงผลอ่านง่าย
+                let itemsHtml = '<ul>';
+                order.items.forEach(item => {
+                    itemsHtml += `<li>${item.name} (${item.price} ฿)</li>`;
+                });
+                itemsHtml += '</ul>';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>#ORD-${1000 + index}</strong></td>
+                    <td>${order.name}<br><small style="color:#666;">📞 ${order.phone}</small></td>
+                    <td>${itemsHtml}</td>
+                    <td><small>${order.address}</small></td>
+                    <td><strong style="color:#d32f2f;">${order.totalPrice} บาท</strong></td>
+                    <td><span class="status-badge">${order.status || 'รอดำเนินการ'}</span></td>
+                    <td><button class="btn-action" onclick="deleteOrder(${index})">ลบ</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            totalSalesEl.textContent = totalSales + ' บาท';
+        }
+
+        function deleteOrder(index) {
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.splice(index, 1);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            loadOrders();
+        }
+
+        function clearAllOrders() {
+            if (confirm('คุณต้องการล้างประวัติออเดอร์ทั้งหมดจริงหรือ?')) {
+                localStorage.removeItem('orders');
+                loadOrders();
+            }
+        }
+
+        loadOrders();
+    </script>
+
+</body>
+</html>
