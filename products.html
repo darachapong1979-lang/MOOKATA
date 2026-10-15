@@ -4,75 +4,221 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เมนูสินค้า - หมูกระทะย่างให้</title>
+    <!-- ฟอนต์ Prompt สุดพรีเมียม -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tahoma', sans-serif; background-color: #fdf2e9; margin: 0; padding: 0; text-align: center; }
+        :root {
+            --bg-dark: #12080a;
+            --card-bg: #1c1013;
+            --card-border: #3d1c24;
+            --maroon-accent: #8b0000;
+            --gold-light: #ffd700;
+            --text-main: #ffffff;
+            --text-sub: #d1c4c6;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+
+        /* 🎨 นำภาพพื้นหลังพรีเมียมกลับมาแล้ว! */
+        body { 
+            font-family: 'Prompt', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 0; 
+            text-align: center; 
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(218, 41, 28, 0.25), transparent 70%),
+                linear-gradient(rgba(18, 8, 10, 0.88), rgba(18, 8, 10, 0.95)),
+                url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
         
-        nav { background-color: #d32f2f; padding: 15px; display: flex; justify-content: center; gap: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 18px; }
-        nav a:hover { text-decoration: underline; }
+        /* Navbar หรูหรา */
+        nav { 
+            background: rgba(28, 16, 19, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 16px 30px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 35px; 
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8); 
+            border-bottom: 2px solid var(--maroon-accent);
+        }
+        nav a { 
+            color: var(--text-sub); 
+            text-decoration: none; 
+            font-weight: 500; 
+            font-size: 17px; 
+        }
+        nav a:hover, nav a.active { 
+            color: var(--gold-light); 
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
         
-        .section-title { color: #d32f2f; margin-top: 30px; font-size: 24px; }
+        .section-title { 
+            color: var(--gold-light); 
+            margin-top: 50px; 
+            font-size: 1.8rem; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(218, 41, 28, 0.6);
+        }
         
-        .menu-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 10px 20px; }
+        .menu-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; padding: 15px 20px; max-width: 1100px; margin: 0 auto; }
         
-        /* การ์ดสินค้ากำหนด position: relative เพื่อรองรับ Badge มุมขวาบน */
+        /* การ์ดสินค้าพรีเมียม */
         .card { 
             position: relative;
-            background: white; 
-            border-radius: 12px; 
-            padding: 15px; 
-            width: 240px; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+            background: rgba(28, 16, 19, 0.85); 
+            border: 1px solid var(--card-border);
+            border-radius: 16px; 
+            padding: 20px; 
+            width: 250px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5); 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
+            backdrop-filter: blur(5px);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-light);
+            box-shadow: 0 12px 25px rgba(218, 41, 28, 0.4);
         }
         
-        /* สไตล์ของ Badge แสดงจำนวนที่มุมขวาบนของการ์ด */
+        /* Badge แสดงจำนวนสินค้า */
         .badge {
             position: absolute;
             top: -8px;
             right: -8px;
-            background-color: #d32f2f;
-            color: white;
+            background-color: var(--gold-light);
+            color: #12080a;
             font-size: 14px;
             font-weight: bold;
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+            border: 2px solid var(--card-bg);
             z-index: 10;
-            display: none; /* ซ่อนไว้ก่อน ถ้ายังไม่ถูกกดเลือก */
+            display: none; 
         }
 
-        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
-        .price { color: #d32f2f; font-weight: bold; font-size: 1.2rem; margin: 8px 0; }
+        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; border: 1px solid var(--card-border); }
+        .card h3 { color: #ffffff; font-size: 1.15rem; margin: 12px 0 6px 0; }
         
-        select { width: 100%; padding: 6px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #ccc; font-family: 'Tahoma', sans-serif; }
+        .price { color: var(--gold-light); font-weight: bold; font-size: 1.2rem; margin: 8px 0; }
         
-        button { background-color: #e65100; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 14px; }
-        button:hover { background-color: #bf360c; }
+        select { width: 100%; padding: 10px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--card-border); background: rgba(18, 8, 10, 0.9); color: white; font-family: 'Prompt', sans-serif; }
+        
+        /* ปุ่มเพิ่มลงตะกร้า */
+        button { background: linear-gradient(135deg, #d32f2f, #8b0000); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; font-size: 14px; font-family: 'Prompt', sans-serif; }
+        button:hover { background: linear-gradient(135deg, #e53935, #b71c1c); }
 
-        .btn-detail { background-color: #0288d1; text-decoration: none; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; margin-bottom: 8px; display: block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .btn-detail:hover { background-color: #01579b; }
+        /* ปุ่มดูรายละเอียด */
+        .btn-detail { background-color: rgba(1, 87, 155, 0.8); text-decoration: none; color: white; padding: 10px; border-radius: 8px; font-size: 14px; margin-bottom: 8px; display: block; font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+        .btn-detail:hover { background-color: #0288d1; }
 
-        .cart-box { background: white; max-width: 450px; margin: 30px auto; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        /* -------------------------------------------------------------
+           ✨ ส่วน Add-on ท็อปปิ้งสั่งเพิ่ม
+        ------------------------------------------------------------- */
+        .addons-container {
+            background: rgba(28, 16, 19, 0.9);
+            border: 1px solid var(--card-border);
+            max-width: 950px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            text-align: left;
+            backdrop-filter: blur(8px);
+        }
+        .addons-title {
+            color: var(--gold-light);
+            text-align: center;
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .addon-group-title {
+            color: var(--gold-light);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 20px 0 12px 0;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 6px;
+        }
+        .addon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .addon-card {
+            background: rgba(18, 8, 10, 0.6);
+            border: 1px solid var(--card-border);
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .addon-card:hover {
+            border-color: var(--gold-light);
+        }
+        .addon-card label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+            font-size: 14px;
+            width: 100%;
+        }
+        .addon-price {
+            color: var(--gold-light);
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .btn-add-addons {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            margin-top: 25px;
+            font-size: 16px;
+        }
+        .btn-add-addons:hover {
+            background: linear-gradient(135deg, #388e3c, #2e7d32);
+        }
+
+        /* กล่องตะกร้าสินค้าด้านล่าง */
+        .cart-box { background: rgba(28, 16, 19, 0.92); border: 1px solid var(--card-border); max-width: 500px; margin: 50px auto; padding: 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); color: var(--text-main); backdrop-filter: blur(8px); }
+        .cart-box h3 { color: var(--gold-light); }
         .cart-box ul { list-style: none; padding: 0; text-align: left; }
-        .cart-box li { border-bottom: 1px solid #eee; padding: 8px 0; display: flex; justify-content: space-between; align-items: center; }
-        .btn-delete { background-color: #d32f2f; padding: 4px 8px; font-size: 12px; width: auto; }
-        .btn-checkout { background-color: #2e7d32; padding: 12px; font-size: 18px; width: 100%; margin-top: 15px; text-decoration: none; color: white; display: block; border-radius: 6px; box-sizing: border-box; font-weight: bold; text-align: center; }
+        .cart-box li { border-bottom: 1px solid var(--card-border); padding: 12px 0; display: flex; justify-content: space-between; align-items: center; color: var(--text-sub); }
+        
+        .btn-delete { background: #5c061c; padding: 6px 12px; font-size: 12px; width: auto; border-radius: 6px; }
+        .btn-delete:hover { background: #800020; }
+        
+        .btn-checkout { background: linear-gradient(135deg, #2e7d32, #1b5e20); padding: 14px; font-size: 18px; width: 100%; margin-top: 20px; text-decoration: none; color: white; display: block; border-radius: 10px; box-sizing: border-box; font-weight: bold; text-align: center; }
+        .btn-checkout:hover { background: linear-gradient(135deg, #388e3c, #2e7d32); }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html">🏠 Home</a>
-        <a href="products.html">🍖 Menu</a>
-        <a href="checkout.html">🛒 Cart & Checkout</a>
+        <a href="index.html">🏠 หน้าแรก</a>
+        <a href="products.html" class="active">🍖 เมนูอาหาร</a>
+        <a href="checkout.html">🛒 ตะกร้าสินค้า</a>
     </nav>
 
     <!-- 1. เซกชันชุดหมูกระทะ -->
@@ -231,15 +377,107 @@
         </div>
     </div>
 
+    <!-- =============================================================
+       ✨ ส่วน Add-on ท็อปปิ้งสั่งเพิ่ม
+    ============================================================= -->
+    <div class="addons-container">
+        <h3 class="addons-title">✨ เลือกสั่งวัตถุดิบ & ท็อปปิ้งเพิ่มตามใจชอบ</h3>
+        
+        <!-- หมวดเนื้อสัตว์ -->
+        <div class="addon-group-title">🥩 หมวดเนื้อสัตว์สดเพิ่ม</div>
+        <div class="addon-grid">
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="หมูหมักนุ่มพิเศษ" data-price="39"> หมูหมักนุ่มพิเศษ</label>
+                <span class="addon-price">+39 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="สามชั้นสไลด์" data-price="49"> สามชั้นสไลด์</label>
+                <span class="addon-price">+49 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="ตู้มซีฟู้ด (กุ้ง/หมึกสด)" data-price="59"> ตู้มซีฟู้ด (กุ้ง/หมึกสด)</label>
+                <span class="addon-price">+59 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="ตับหมูสด" data-price="39"> ตับหมูสด</label>
+                <span class="addon-price">+39 ฿</span>
+            </div>
+        </div>
+
+        <!-- หมวดวัตถุดิบต้ม/ลูกชิ้น -->
+        <div class="addon-group-title">🍢 หมวดวัตถุดิบต้ม / ลูกชิ้น (Toppings)</div>
+        <div class="addon-grid">
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="ไข่ไก่สด" data-price="12"> ไข่ไก่สด</label>
+                <span class="addon-price">+12 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="ไข่ต้ม" data-price="15"> ไข่ต้ม</label>
+                <span class="addon-price">+15 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="ชุดผักสดรวม" data-price="20"> ชุดผักสดรวม</label>
+                <span class="addon-price">+20 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="วุ้นเส้น" data-price="20"> วุ้นเส้น</label>
+                <span class="addon-price">+20 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="บะหมี่กึ่งสำเร็จรูป (มาม่า)" data-price="9"> มาม่า</label>
+                <span class="addon-price">+9 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="ลูกชิ้นปลา" data-price="10"> ลูกชิ้นปลา</label>
+                <span class="addon-price">+10 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="เต้าหู้ปลา" data-price="10"> เต้าหู้ปลา</label>
+                <span class="addon-price">+10 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="ชีสบอล" data-price="20"> ชีสบอล</label>
+                <span class="addon-price">+20 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="เห็ดเข็มทอง" data-price="8"> เห็ดเข็มทอง</label>
+                <span class="addon-price">+8 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="เห็ดออรินจิ" data-price="10"> เห็ดออรินจิ</label>
+                <span class="addon-price">+10 ฿</span>
+            </div>
+        </div>
+
+        <!-- หมวดน้ำจิ้ม/น้ำซุป -->
+        <div class="addon-group-title">🥣 หมวดน้ำจิ้มและน้ำซุป (Sauces & Soups)</div>
+        <div class="addon-grid">
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="น้ำจิ้มสูตรเด็ด (เพิ่มถ้วยโต)" data-price="39"> น้ำจิ้มสูตรเด็ด (ถ้วยโต)</label>
+                <span class="addon-price">+39 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="น้ำซุปกระดูกหมูเข้มข้น" data-price="59"> น้ำซุปกระดูกหมูเข้มข้น</label>
+                <span class="addon-price">+59 ฿</span>
+            </div>
+            <div class="addon-card">
+                <label><input type="checkbox" class="addon-checkbox" data-name="ชีสยืดกระทะร้อน" data-price="30"> ชีสยืดกระทะร้อน</label>
+                <span class="addon-price">+30 ฿</span>
+            </div>
+        </div>
+
+        <button class="btn-add-addons" onclick="addSelectedAddonsToCart()">➕ เพิ่มวัตถุดิบที่เลือกเข้ารายการตะกร้า</button>
+    </div>
+
     <!-- ตะกร้าสินค้า -->
     <div class="cart-box">
         <h3>🛒 รายการในตะกร้า</h3>
         <ul id="cart-list">
-            <li style="color: #888;">ยังไม่มีสินค้าในตะกร้า...</li>
+            <li style="color: var(--text-sub);">ยังไม่มีสินค้าในตะกร้า...</li>
         </ul>
-        <hr>
-        <p><strong>ราคารวม: <span id="total-price" style="color: #d32f2f;">0</span> บาท</strong></p>
-        <button onclick="clearCart()" style="background-color: #757575; width: auto; padding: 6px 12px;">🗑️ ล้างตะกร้า</button>
+        <hr style="border-color: var(--card-border);">
+        <p><strong>ราคารวม: <span id="total-price" style="color: var(--gold-light);">0</span> บาท</strong></p>
+        <button onclick="clearCart()" style="background-color: #333; width: auto; padding: 6px 12px; margin-bottom: 10px;">🗑️ ล้างตะกร้า</button>
         <a href="checkout.html" class="btn-checkout">ไปที่หน้าชำระเงิน 👉</a>
     </div>
 
@@ -253,7 +491,7 @@
         }
 
         function addToCart(name, price) {
-            cart.push({ name, price });
+            cart.push({ name, price, baseName: name });
             saveAndRender();
         }
 
@@ -264,6 +502,24 @@
             
             cart.push({ name: `${drinkName} (${sizeText})`, price: price, baseName: drinkName });
             saveAndRender();
+        }
+
+        function addSelectedAddonsToCart() {
+            const checkboxes = document.querySelectorAll('.addon-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert('กรุณาติ๊กเลือกวัตถุดิบที่ต้องการเพิ่มก่อนครับ!');
+                return;
+            }
+
+            checkboxes.forEach(cb => {
+                const name = cb.getAttribute('data-name');
+                const price = parseFloat(cb.getAttribute('data-price'));
+                cart.push({ name: '✨ ' + name, price: price, baseName: name });
+                cb.checked = false;
+            });
+
+            saveAndRender();
+            alert('เพิ่มวัตถุดิบเสริมลงในตะกร้าเรียบร้อยแล้ว!');
         }
 
         function removeFromCart(index) {
@@ -283,7 +539,7 @@
             
             let total = 0;
             if (cart.length === 0) {
-                list.innerHTML = '<li style="color: #888;">ยังไม่มีสินค้าในตะกร้า...</li>';
+                list.innerHTML = '<li style="color: var(--text-sub);">ยังไม่มีสินค้าในตะกร้า...</li>';
             } else {
                 cart.forEach((item, index) => {
                     total += item.price;
@@ -298,17 +554,13 @@
             totalEl.textContent = total;
         }
 
-        // ฟังก์ชันคำนวณและอัปเดต Badge ตัวเลขที่มุมขวาบนของการ์ดแต่ละใบ
         function updateBadges() {
             const counts = {};
-
-            // นับจำนวนสินค้าแต่ละชนิดในตะกร้า
             cart.forEach(item => {
                 const key = item.baseName || item.name;
                 counts[key] = (counts[key] || 0) + 1;
             });
 
-            // อัปเดตการแสดงผลใน Badge ของทุกการ์ด
             const allBadges = document.querySelectorAll('.badge');
             allBadges.forEach(badge => {
                 const badgeId = badge.id.replace('badge-', '');
@@ -323,7 +575,6 @@
             });
         }
 
-        // โหลดข้อมูลและแสดงผลตั้งต้น
         renderCart();
         updateBadges();
     </script>
