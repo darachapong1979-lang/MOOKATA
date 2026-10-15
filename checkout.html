@@ -4,123 +4,284 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ชำระเงิน - หมูกระทะย่างให้</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tahoma', sans-serif; background-color: #fdf2e9; margin: 0; padding: 0; text-align: center; }
-        
-        nav { background-color: #d32f2f; padding: 15px; display: flex; justify-content: center; gap: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 18px; }
-        nav a:hover { text-decoration: underline; }
+        :root {
+            --bg-dark: #12080a;
+            --card-bg: #1c1013;
+            --card-border: #3d1c24;
+            --maroon-accent: #8b0000;
+            --gold-light: #ffd700;
+            --text-main: #ffffff;
+            --text-sub: #d1c4c6;
+        }
 
-        .container { background: white; max-width: 500px; margin: 30px auto; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: left; }
-        
-        .logo-checkout-container { text-align: center; margin-bottom: 15px; }
-        .logo-checkout { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #d32f2f; box-shadow: 0 4px 8px rgba(0,0,0,0.12); }
+        * { box-sizing: border-box; transition: all 0.25s ease; }
 
-        h2 { color: #d32f2f; text-align: center; margin-top: 5px; margin-bottom: 20px; }
+        body { 
+            font-family: 'Prompt', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 0; 
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(218, 41, 28, 0.2), transparent 60%),
+                linear-gradient(rgba(18, 8, 10, 0.92), rgba(18, 8, 10, 0.96)),
+                url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
         
-        ul { list-style: none; padding: 0; }
-        li { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; }
-        
-        .total-box { font-size: 20px; font-weight: bold; color: #d32f2f; text-align: right; margin-top: 15px; }
-        
-        .form-group { margin-top: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: 'Tahoma', sans-serif; }
-        
-        .btn-order { background-color: #2e7d32; color: white; border: none; padding: 14px; width: 100%; font-size: 18px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 20px; }
-        .btn-order:hover { background-color: #1b5e20; }
+        nav { 
+            background: rgba(28, 16, 19, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 16px 30px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 35px; 
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8); 
+            border-bottom: 2px solid var(--maroon-accent);
+        }
+        nav a { color: var(--text-sub); text-decoration: none; font-weight: 500; font-size: 17px; }
+        nav a:hover, nav a.active { color: var(--gold-light); }
+
+        .container { 
+            max-width: 800px; 
+            margin: 40px auto; 
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border);
+            padding: 35px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7); 
+        }
+
+        h2 { color: #ffffff; text-align: center; margin-top: 0; margin-bottom: 25px; }
+
+        .cart-summary {
+            background: #12080a;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .cart-summary h3 { margin-top: 0; color: var(--gold-light); font-size: 1.2rem; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
+        .cart-item-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+        .cart-total-row { display: flex; justify-content: space-between; margin-top: 15px; font-size: 1.2rem; font-weight: 700; color: var(--gold-light); }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-sub); }
+        .form-control { 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 10px; 
+            background: #12080a; 
+            border: 1px solid var(--card-border); 
+            color: white; 
+            font-family: 'Prompt', sans-serif;
+            font-size: 15px;
+            outline: none;
+        }
+        .form-control:focus { border-color: var(--gold-light); }
+
+        /* กล่องข้อมูลโอนเงิน */
+        .bank-info-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px dashed var(--gold-light);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--text-sub);
+            text-align: center;
+        }
+        .bank-info-box span { color: var(--gold-light); font-weight: bold; }
+
+        .btn-submit { 
+            background: linear-gradient(135deg, #ffd700, #ff8c00); 
+            color: #12080a; 
+            border: none; 
+            padding: 15px; 
+            border-radius: 30px; 
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            cursor: pointer; 
+            width: 100%; 
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+        .btn-submit:hover { transform: scale(1.02); }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html">🏠 Home</a>
-        <a href="products.html">🍖 Menu</a>
-        <a href="checkout.html">🛒 Cart & Checkout</a>
-        <a href="admin.html">⚙️ Admin</a>
+        <a href="index.html">🏠 หน้าแรก</a>
+        <a href="products.html">🍖 เมนูอาหาร</a>
+        <a href="checkout.html" class="active">🛒 ตะกร้าสินค้า & ชำระเงิน</a>
+        <a href="admin.html">⚙️ จัดการระบบ</a>
     </nav>
 
     <div class="container">
-        <div class="logo-checkout-container">
-            <img src="logo.jpg" alt="โลโก้ร้านหมูกระทะย่างให้" class="logo-checkout">
+        <h2>🛒 ตะกร้าสินค้าและการชำระเงิน</h2>
+
+        <!-- สรุปรายการสินค้า -->
+        <div class="cart-summary">
+            <h3>📦 รายการสินค้าของคุณ</h3>
+            <div id="checkout-items-list">
+                <!-- รายการจะถูกโหลดมาตรงนี้ -->
+            </div>
+            <div class="cart-total-row">
+                <span>ยอดชำระสุทธิ:</span>
+                <span id="checkout-total-price">0 ฿</span>
+            </div>
         </div>
 
-        <h2>🛒 สรุปรายการคำสั่งซื้อ</h2>
-        <ul id="checkout-list">
-            <li style="color: #888;">ไม่มีสินค้าในตะกร้า</li>
-        </ul>
-        <div class="total-box">ราคารวมทั้งหมด: <span id="checkout-total">0</span> บาท</div>
+        <!-- ฟอร์มกรอกข้อมูล & ชำระเงิน -->
+        <form id="checkout-form" onsubmit="submitOrder(event)">
+            <div class="form-group">
+                <label>👤 ชื่อ-นามสกุล ผู้รับ</label>
+                <input type="text" id="cust-name" class="form-control" placeholder="กรอกชื่อ-นามสกุลของคุณ" required>
+            </div>
 
-        <div class="form-group">
-            <label>👤 ชื่อ-นามสกุล ผู้รับ:</label>
-            <input type="text" id="cust-name" placeholder="กรอกชื่อของคุณ">
-        </div>
-        <div class="form-group">
-            <label>📞 เบอร์โทรศัพท์:</label>
-            <input type="text" id="cust-phone" placeholder="เบอร์โทรติดต่อ">
-        </div>
-        <div class="form-group">
-            <label>📍 ที่อยู่จัดส่ง:</label>
-            <textarea id="cust-address" rows="3" placeholder="บ้านเลขที่, ซอย, ถนน, แขวง/ตำบล"></textarea>
-        </div>
+            <div class="form-group">
+                <label>📞 เบอร์โทรศัพท์ติดต่อ</label>
+                <input type="tel" id="cust-phone" class="form-control" placeholder="เบอร์โทรศัพท์มือถือ" required>
+            </div>
 
-        <button class="btn-order" onclick="submitOrder()">✅ ยืนยันการสั่งซื้อ</button>
+            <div class="form-group">
+                <label>📍 ที่อยู่จัดส่ง</label>
+                <textarea id="cust-address" class="form-control" rows="3" placeholder="บ้านเลขที่, ซอย, ถนน, ตำบล, จังหวัด..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>💳 ช่องทางการชำระเงิน</label>
+                <select id="payment-method" class="form-control" onchange="togglePaymentSection()">
+                    <option value="โอนเงินผ่านธนาคาร">โอนเงินผ่านบัญชีธนาคาร (แนบสลิป)</option>
+                    <option value="เก็บเงินปลายทาง (COD)">เก็บเงินปลายทาง (COD)</option>
+                </select>
+            </div>
+
+            <!-- ส่วนแสดงบัญชีและอัปโหลดสลิป (แสดงเฉพาะตอนเลือกโอนเงิน) -->
+            <div id="transfer-section">
+                <div class="bank-info-box">
+                    🏦 ธนาคารกสิกรไทย (KBANK) <br>
+                    เลขบัญชี: <span>123-4-56789-0</span> <br>
+                    ชื่อบัญชี: บจก. หมูกระทะย่างให้
+                </div>
+                <div class="form-group">
+                    <label>📎 แนบหลักฐานการโอนเงิน (สลิปโอนเงิน)</label>
+                    <input type="file" id="slip-file" class="form-control" accept="image/*">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">🚀 ยืนยันการสั่งซื้อ</button>
+        </form>
     </div>
 
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const listEl = document.getElementById('checkout-list');
-        const totalEl = document.getElementById('checkout-total');
-        
-        let total = 0;
-        if (cart.length === 0) {
-            listEl.innerHTML = '<li style="color: #888;">ไม่มีสินค้าในตะกร้า</li>';
-        } else {
+
+        function renderCheckoutCart() {
+            const listEl = document.getElementById('checkout-items-list');
+            const totalEl = document.getElementById('checkout-total-price');
             listEl.innerHTML = '';
+
+            let total = 0;
+            if (cart.length === 0) {
+                listEl.innerHTML = '<p style="color:var(--text-sub); text-align:center; margin:10px 0;">ยังไม่มีสินค้าในตะกร้า <a href="products.html" style="color:var(--gold-light);">ไปเลือกซื้อเมนูเลย!</a></p>';
+                totalEl.textContent = '0 ฿';
+                return;
+            }
+
             cart.forEach(item => {
                 total += item.price;
-                const li = document.createElement('li');
-                li.innerHTML = `<span>${item.name}</span> <span>${item.price} บาท</span>`;
-                listEl.appendChild(li);
+                const row = document.createElement('div');
+                row.className = 'cart-item-row';
+                row.innerHTML = `
+                    <span>${item.name}</span>
+                    <span style="color:var(--gold-light); font-weight:600;">${item.price} ฿</span>
+                `;
+                listEl.appendChild(row);
             });
-        }
-        totalEl.textContent = total;
 
-        function submitOrder() {
+            totalEl.textContent = total + ' ฿';
+        }
+
+        function togglePaymentSection() {
+            const method = document.getElementById('payment-method').value;
+            const section = document.getElementById('transfer-section');
+            if (method.includes('ปลายทาง')) {
+                section.style.display = 'none';
+            } else {
+                section.style.display = 'block';
+            }
+        }
+
+        function submitOrder(event) {
+            event.preventDefault();
+
+            if (cart.length === 0) {
+                alert('ตะกร้าสินค้าว่างเปล่า กรุณาเลือกสินค้าก่อนครับ!');
+                return;
+            }
+
             const name = document.getElementById('cust-name').value;
             const phone = document.getElementById('cust-phone').value;
             const address = document.getElementById('cust-address').value;
+            const paymentMethod = document.getElementById('payment-method').value;
 
-            if (!name || !phone || !address) {
-                alert('กรุณากรอกข้อมูลชื่อ เบอร์โทร และที่อยู่ให้ครบถ้วนครับ!');
+            let totalPrice = 0;
+            cart.forEach(item => totalPrice += item.price);
+
+            // จัดการเรื่องรูปสลิป (แปลงเป็น Base64 เพื่อเก็บใน LocalStorage ให้แอดมินกดดูได้)
+            const slipInput = document.getElementById('slip-file');
+            
+            if (paymentMethod.includes('โอนเงิน') && slipInput.files.length === 0) {
+                alert('กรุณาแนบสลิปการโอนเงินก่อนยืนยันคำสั่งซื้อครับ!');
                 return;
             }
 
-            if (cart.length === 0) {
-                alert('ยังไม่มีสินค้าในตะกร้า กรุณาเลือกสินค้าก่อนครับ!');
-                return;
+            if (paymentMethod.includes('โอนเงิน') && slipInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.readAsDataURL(slipInput.files[0]);
+                reader.onload = function () {
+                    saveOrderToStorage(name, phone, address, paymentMethod, totalPrice, reader.result);
+                };
+            } else {
+                saveOrderToStorage(name, phone, address, paymentMethod, totalPrice, null);
             }
+        }
 
-            // สร้างข้อมูลออเดอร์ใหม่เพื่อส่งไปเก็บในหน้า Admin
+        function saveOrderToStorage(name, phone, address, paymentMethod, totalPrice, slipData) {
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            
             const newOrder = {
                 name: name,
                 phone: phone,
                 address: address,
+                paymentMethod: paymentMethod,
                 items: cart,
-                totalPrice: total,
-                status: 'รอดำเนินการ (กำลังย่าง)'
+                totalPrice: totalPrice,
+                slip: slipData, // เก็บรูปสลิป
+                status: 'รอดำเนินการ (กำลังย่าง)',
+                date: new Date().toLocaleString()
             };
 
-            // ดึงออเดอร์เก่ามาต่อกับออเดอร์ใหม่
-            let orders = JSON.parse(localStorage.getItem('orders')) || [];
             orders.push(newOrder);
             localStorage.setItem('orders', JSON.stringify(orders));
+            localStorage.removeItem('cart'); // ล้างตะกร้า
 
-            alert('🎉 สั่งซื้อสำเร็จ! ขอบคุณที่อุดหนุนหมูกระทะย่างให้ครับ');
-            localStorage.removeItem('cart'); // ล้างตะกร้าหลังสั่งซื้อสำเร็จ
-            window.location.href = 'admin.html'; // พาแอดมินหรือลูกค้าไปหน้าแดชบอร์ดดูออเดอร์ได้ทันที
+            alert('🎉 สั่งซื้อสินค้าสำเร็จแล้ว! ขอบคุณที่ใช้บริการ "หมูกระทะย่างให้" ครับ');
+            window.location.href = 'admin.html'; // พาไปดูที่หน้าแอดมินหรือหน้าสำเร็จ
         }
-    </script>
 
+        renderCheckoutCart();
+    </script>
 </body>
 </html>
