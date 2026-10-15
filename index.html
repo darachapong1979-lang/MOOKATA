@@ -4,92 +4,465 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>หน้าแรก - หมูกระทะย่างให้</title>
+    <!-- ฟอนต์ Prompt สุดพรีเมียม -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tahoma', sans-serif; background-color: #fdf2e9; margin: 0; padding: 0; text-align: center; }
-        
-        nav { background-color: #d32f2f; padding: 15px; display: flex; justify-content: center; gap: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 18px; }
-        nav a:hover { text-decoration: underline; }
+        :root {
+            --bg-dark: #12080a;
+            --card-bg: #1c1013;
+            --card-border: #3d1c24;
+            --maroon-accent: #8b0000;
+            --gold-light: #ffd700;
+            --text-main: #ffffff;
+            --text-sub: #d1c4c6;
+        }
 
-        .hero { padding: 40px 20px; max-width: 800px; margin: 0 auto; }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+
+        body { 
+            font-family: 'Prompt', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 0; 
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(218, 41, 28, 0.25), transparent 70%),
+                linear-gradient(rgba(18, 8, 10, 0.88), rgba(18, 8, 10, 0.95)),
+                url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
         
+        /* Navbar หรูหรา */
+        nav { 
+            background: rgba(28, 16, 19, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 16px 30px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 35px; 
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8); 
+            border-bottom: 2px solid var(--maroon-accent);
+        }
+        nav a { 
+            color: var(--text-sub); 
+            text-decoration: none; 
+            font-weight: 500; 
+            font-size: 17px; 
+        }
+        nav a:hover, nav a.active { 
+            color: var(--gold-light); 
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Hero Banner */
+        .hero { 
+            padding: 50px 20px 40px; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            text-align: center;
+        }
+        
+        .logo-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
         .logo-center {
-            width: 160px;
-            height: 160px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid white;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-            margin-bottom: 20px;
+            border: 3px solid var(--gold-light);
+            box-shadow: 0 0 25px rgba(218, 41, 28, 0.6);
         }
-
-        .hero h1 { color: #d32f2f; font-size: 2.5rem; margin-bottom: 10px; }
-        .hero p { color: #555; font-size: 1.2rem; margin-bottom: 25px; line-height: 1.6; }
+        
+        .hero h1 { 
+            color: #ffffff; 
+            font-size: 2.5rem; 
+            margin: 10px 0; 
+            font-weight: 700;
+            text-shadow: 0 4px 15px rgba(218, 41, 28, 0.8);
+        }
+        
+        .hero p { 
+            color: var(--text-sub); 
+            font-size: 1.15rem; 
+            margin-bottom: 30px; 
+            line-height: 1.6; 
+            font-weight: 300;
+        }
         
         .btn-start { 
-            background-color: #e65100; 
-            color: white; 
-            padding: 15px 35px; 
-            font-size: 20px; 
-            font-weight: bold; 
+            background: linear-gradient(135deg, #ffd700, #ff8c00); 
+            color: #12080a; 
+            padding: 14px 40px; 
+            font-size: 18px; 
+            font-weight: 700; 
             text-decoration: none; 
-            border-radius: 30px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+            border-radius: 50px; 
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3); 
             display: inline-block;
         }
-        .btn-start:hover { background-color: #bf360c; }
+        .btn-start:hover { 
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(255, 215, 0, 0.5);
+        }
 
+        /* การ์ดฟีเจอร์แบบกดได้ (Clickable Cards) */
         .features {
             display: flex;
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
-            padding: 20px;
-            margin-top: 30px;
+            margin-top: 40px;
+            margin-bottom: 60px;
         }
         .feature-card {
-            background: white;
+            background: rgba(28, 16, 19, 0.85);
+            border: 1px solid var(--card-border);
             padding: 20px;
-            border-radius: 10px;
-            width: 220px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            width: 260px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            text-align: center;
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            position: relative;
+        }
+        .feature-card:hover {
+            border-color: var(--gold-light);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(218, 41, 28, 0.4);
+        }
+        .feature-card .icon { font-size: 35px; margin-bottom: 8px; }
+        .feature-card h3 { color: var(--gold-light); margin-bottom: 8px; font-size: 18px; }
+        .feature-card p { color: var(--text-sub); font-size: 13px; margin: 0; line-height: 1.4; }
+        .feature-card .click-hint {
+            margin-top: 12px;
+            font-size: 11px;
+            color: #ff9800;
+            font-weight: 500;
+        }
+
+        /* ==========================================
+           📞 กล่องติดต่อร้านค้าแบบย่อส่วน (มุมขวาล่าง)
+        ========================================== */
+        .contact-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(28, 16, 19, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--gold-light);
+            border-radius: 12px;
+            padding: 12px 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+            z-index: 1500;
+            max-width: 240px;
+        }
+        .contact-header {
+            font-weight: 700;
+            color: var(--gold-light);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+            padding-bottom: 4px;
             text-align: center;
         }
-        .feature-card h3 { color: #d32f2f; margin-bottom: 8px; font-size: 18px; }
-        .feature-card p { color: #666; font-size: 14px; margin: 0; }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            color: #ffffff;
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+        .contact-item:hover { color: var(--gold-light); }
+        .contact-badge {
+            background: var(--maroon-accent);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .qr-preview-container {
+            text-align: center;
+            margin-top: 6px;
+            border-top: 1px dashed rgba(255,255,255,0.15);
+            padding-top: 6px;
+        }
+        .qr-preview {
+            width: 55px;
+            height: 55px;
+            border-radius: 6px;
+            border: 1px solid var(--gold-light);
+        }
+
+        /* -------------------------------------------------------------
+           🎯 สไตล์สำหรับ POPUP MODAL (หน้าต่างเด้ง)
+        ------------------------------------------------------------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: var(--card-bg);
+            border: 2px solid var(--gold-light);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 550px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(218, 41, 28, 0.5);
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: left;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: var(--text-sub);
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: var(--gold-light);
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 15px;
+        }
+        .modal-header .modal-icon { font-size: 45px; }
+        .modal-header h2 {
+            margin: 0;
+            color: var(--gold-light);
+            font-size: 1.5rem;
+        }
+        .modal-body p {
+            color: var(--text-main);
+            line-height: 1.7;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        .modal-body ul {
+            padding-left: 20px;
+            color: var(--text-sub);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .modal-body li {
+            margin-bottom: 6px;
+        }
+        .modal-footer-btn {
+            background: linear-gradient(135deg, #d32f2f, #8b0000);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .modal-footer-btn:hover {
+            background: linear-gradient(135deg, #e53935, #b71c1c);
+        }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html">🏠 Home</a>
-        <a href="products.html">🍖 Menu</a>
-        <a href="checkout.html">🛒 Cart & Checkout</a>
+        <a href="index.html" class="active">🏠 หน้าแรก</a>
+        <a href="products.html">🍖 เมนูอาหาร</a>
+        <a href="checkout.html">🛒 ตะกร้าสินค้า</a>
+        <a href="admin.html">⚙️ จัดการระบบ</a>
     </nav>
 
     <div class="hero">
-        <img src="logo.jpg" alt="โลโก้ร้านหมูกระทะย่างให้" class="logo-center">
+        <div class="logo-wrapper">
+            <img src="logo.jpg" alt="โลโก้ร้านหมูกระทะย่างให้" class="logo-center">
+        </div>
         
-        <h1>🔥 ยินดีต้อนรับสู่ หมูกระทะย่างให้ 🥓</h1>
-        <p>หิวเมื่อไหร่ก็สั่งได้ ส่งตรงความอร่อยถึงหน้าบ้านคุณ อิ่มคุ้ม สะอาด สดใหม่ ไม่ต้องลุกไปย่างเองให้เหนื่อย!</p>
+        <h1>🔥 หมูกระทะย่างให้ สด ใหม่ ทุกวัน 🥓</h1>
+        <p>สัมผัสความอร่อยระดับพรีเมียม หมูหมักนุ่มสูตรเด็ด น้ำจิ้มรสแซ่บ พร้อมบริการย่างให้สดๆ ร้อนๆ ส่งตรงถึงหน้าบ้านคุณ!</p>
         
-        <a href="products.html" class="btn-start">👉 เริ่มสั่งความอร่อยเลย</a>
+        <a href="products.html" class="btn-start">👉 สั่งหมูกระทะเลยตอนนี้</a>
 
+        <!-- ปุ่ม 3 ช่องเปิด Pop-up -->
         <div class="features">
-            <div class="feature-card">
-                <h3>🥩 วัตถุดิบพรีเมียม</h3>
-                <p>หมูนุ่ม หมักสูตรเด็ด สะอาด สดใหม่ทุกวัน</p>
+            <div class="feature-card" onclick="openModal('modal-marinate')">
+                <div class="icon">🥩</div>
+                <h3>หมักนุ่มสูตรพิเศษ</h3>
+                <p>เนื้อหมูเกรดพรีเมียม หมักเข้าเนื้อ นุ่ม ละมุนทุกคำ</p>
+                <div class="click-hint">🔍 คลิกเพื่อดูสูตรหมักและแหล่งที่มา</div>
             </div>
-            <div class="feature-card">
-                <h3>🔥 ย่างให้พร้อมทาน</h3>
-                <p>จัดชุดพร้อมทานหรือเลือกเซ็ตปิ้งย่างได้ตามใจ</p>
+
+            <div class="feature-card" onclick="openModal('modal-grill')">
+                <div class="icon">🔥</div>
+                <h3>ย่างสดใหม่ร้อนๆ</h3>
+                <p>ย่างด้วยเตาถ่านหอมๆ พร้อมทาน ไม่ต้องจุดเตาเอง</p>
+                <div class="click-hint">🔍 คลิกเพื่อดูรายละเอียดการย่าง</div>
             </div>
-            <div class="feature-card">
-                <h3>🚀 ส่งไวทันใจ</h3>
-                <p>ส่งตรงความอร่อยถึงหน้าบ้านคุณอย่างรวดเร็ว</p>
+
+            <div class="feature-card" onclick="openModal('modal-sauce')">
+                <div class="icon">🌶️</div>
+                <h3>น้ำจิ้มรสเด็ด</h3>
+                <p>สูตรโบราณเข้มข้น แซ่บครบรส มะนาวแท้ 100%</p>
+                <div class="click-hint">🔍 คลิกเพื่อดูส่วนผสมน้ำจิ้ม</div>
             </div>
         </div>
     </div>
+
+    <!-- 📞 กล่องติดต่อร้านค้าแบบย่อส่วน (มุมขวาล่าง) -->
+    <div class="contact-widget">
+        <div class="contact-header">
+            📞 ช่องทางติดต่อร้าน
+        </div>
+        
+        <a href="tel:0812345678" class="contact-item">
+            <span>📞 081-234-5678</span>
+            <span class="contact-badge">โทร</span>
+        </a>
+
+        <a href="https://line.me" target="_blank" class="contact-item">
+            <span>💬 @mookata</span>
+            <span class="contact-badge" style="background:#06c755;">ไลน์</span>
+        </a>
+
+        <div class="qr-preview-container">
+            <small style="color:var(--text-sub); display:block; font-size:0.7rem; margin-bottom:3px;">สแกนแอดไลน์</small>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me" alt="Line QR Code" class="qr-preview">
+        </div>
+    </div>
+
+    <!-- =============================================================
+         POPUP 1: หมักนุ่มสูตรพิเศษ
+    ============================================================= -->
+    <div id="modal-marinate" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-marinate')">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal-marinate')">&times;</span>
+            <div class="modal-header">
+                <span class="modal-icon">🥩</span>
+                <h2>สูตรหมักนุ่ม & แหล่งที่มาเนื้อหมู</h2>
+            </div>
+            <div class="modal-body">
+                <p><strong>🏡 คัดสรรจากฟาร์มมาตรฐานสูง:</strong><br>
+                เราคัดเลือกเฉพาะเนื้อหมูส่วนสันนอกและสามชั้นชั้นดี จากฟาร์มปิดที่ได้รับการรับรองมาตรฐานความสะอาด ปลอดสารเร่งเนื้อแดง สด ใหม่ วันต่อวัน</p>
+                
+                <p><strong>✨ สูตรซอสหมักลับฉบับทางร้าน:</strong></p>
+                <ul>
+                    <li>หมักด้วยซอสสูตรลับเข้มข้น นานกว่า 12 ชั่วโมง</li>
+                    <li>ผสมผสานน้ำผึ้งแท้ เพิ่มความนุ่มละมุนละไม</li>
+                    <li>โรยด้วยงาขาวคั่วหอมๆ เข้าเนื้อทุกชิ้น</li>
+                    <li>ไม่ใส่สารบอแรกซ์ ไม่ใส่สารกันบูด ปลอดภัย 100%</li>
+                </ul>
+            </div>
+            <button class="modal-footer-btn" onclick="closeModal('modal-marinate')">เข้าใจแล้ว / ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <!-- =============================================================
+         POPUP 2: ย่างสดใหม่ร้อนๆ
+    ============================================================= -->
+    <div id="modal-grill" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-grill')">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal-grill')">&times;</span>
+            <div class="modal-header">
+                <span class="modal-icon">🔥</span>
+                <h2>บริการย่างสดใหม่ร้อนๆ</h2>
+            </div>
+            <div class="modal-body">
+                <p><strong>🔥 ย่างด้วยเตาถ่านหอมกลิ่นควันธรรมชาติ:</strong><br>
+                เราใช้เตาถ่านไม้โกงกางที่ให้ความร้อนสม่ำเสมอ ย่างโดยเชฟฝีมือเยี่ยม ชิ้นต่อชิ้น เพื่อให้เนื้อหมูสุกกำลังดี ด้านนอกเกรียมหอม ด้านในยังคงความฉ่ำนุ่ม (Juicy)</p>
+                
+                <p><strong>🚀 บรรจุภัณฑ์รักษาความร้อน:</strong></p>
+                <ul>
+                    <li>ย่างใหม่ทันทีตามออเดอร์ (Made-to-Order) ไม่มีทำค้างไว้</li>
+                    <li>บรรจุในกล่องฟอยล์เก็บความร้อนชนิดพิเศษ</li>
+                    <li>ส่งตรงถึงหน้าบ้าน อุ่นร้อนพร้อมทานได้ทันที ไม่ต้องเหนื่อยจุดเตาเอง!</li>
+                </ul>
+            </div>
+            <button class="modal-footer-btn" onclick="closeModal('modal-grill')">เข้าใจแล้ว / ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <!-- =============================================================
+         POPUP 3: น้ำจิ้มรสเด็ด
+    ============================================================= -->
+    <div id="modal-sauce" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-sauce')">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal-sauce')">&times;</span>
+            <div class="modal-header">
+                <span class="modal-icon">🌶️</span>
+                <h2>สูตรเด็ดน้ำจิ้มหมูกระทะโบราณ</h2>
+            </div>
+            <div class="modal-body">
+                <p><strong>🌶️ รสชาติเผ็ดแซ่บ กลมกล่อม ครบรส:</strong><br>
+                น้ำจิ้มสูตรโบราณดั้งเดิม รสชาติเผ็ด เปรี้ยว หวาน เค็ม เคี่ยวจนงวดเข้มข้น หอมกลิ่นพริกกระเทียมเตะจมูก</p>
+                
+                <p><strong>🧄 ส่วนผสมสำคัญที่เราเลือกใช้:</strong></p>
+                <ul>
+                    <li>พริกขี้หนูสวนสด แท้ 100% เพิ่มความเผ็ดร้อนสะใจ</li>
+                    <li>น้ำมะนาวคั้นสดแท้ ไม่ใช้น้ำมะนาวขวด</li>
+                    <li>กระเทียมเจียวหอมๆ และงาขาวคั่วบดใหม่ทุกวัน</li>
+                    <li>ไร้ผงชูรส ไร้สารกันเสีย สะอาด ปลอดภัย</li>
+                </ul>
+            </div>
+            <button class="modal-footer-btn" onclick="closeModal('modal-sauce')">เข้าใจแล้ว / ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <!-- JavaScript ควบคุมการเปิด-ปิด Pop-up -->
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function closeModalOnOverlay(event, modalId) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closeModal(modalId);
+            }
+        }
+    </script>
 
 </body>
 </html>
