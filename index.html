@@ -54,6 +54,7 @@
             text-decoration: none; 
             font-weight: 500; 
             font-size: 17px; 
+            cursor: pointer;
         }
         nav a:hover, nav a.active { 
             color: var(--gold-light); 
@@ -62,7 +63,7 @@
 
         /* Hero Banner */
         .hero { 
-            padding: 50px 20px 40px; 
+            padding: 60px 20px 40px; 
             max-width: 900px; 
             margin: 0 auto; 
             text-align: center;
@@ -71,62 +72,62 @@
         .logo-wrapper {
             position: relative;
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .logo-center {
-            width: 130px;
-            height: 130px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--gold-light);
-            box-shadow: 0 0 25px rgba(218, 41, 28, 0.6);
+            border: 4px solid var(--gold-light);
+            box-shadow: 0 0 30px rgba(218, 41, 28, 0.6);
         }
         
         .hero h1 { 
             color: #ffffff; 
-            font-size: 2.5rem; 
-            margin: 10px 0; 
+            font-size: 2.8rem; 
+            margin: 15px 0; 
             font-weight: 700;
             text-shadow: 0 4px 15px rgba(218, 41, 28, 0.8);
         }
         
         .hero p { 
             color: var(--text-sub); 
-            font-size: 1.15rem; 
-            margin-bottom: 30px; 
-            line-height: 1.6; 
+            font-size: 1.25rem; 
+            margin-bottom: 35px; 
+            line-height: 1.7; 
             font-weight: 300;
         }
         
         .btn-start { 
-            background: linear-gradient(135deg, #ffd700, #ff8c00); 
-            color: #12080a; 
-            padding: 14px 40px; 
-            font-size: 18px; 
-            font-weight: 700; 
+            background: linear-gradient(135deg, #d32f2f, #8b0000); 
+            color: white; 
+            padding: 16px 45px; 
+            font-size: 20px; 
+            font-weight: 600; 
             text-decoration: none; 
             border-radius: 50px; 
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3); 
+            box-shadow: 0 8px 25px rgba(211, 47, 47, 0.5); 
             display: inline-block;
+            border: 2px solid var(--gold-light);
         }
         .btn-start:hover { 
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 30px rgba(255, 215, 0, 0.5);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(255, 215, 0, 0.4);
         }
 
         /* การ์ดฟีเจอร์แบบกดได้ (Clickable Cards) */
         .features {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             flex-wrap: wrap;
-            margin-top: 40px;
-            margin-bottom: 60px;
+            margin-top: 50px;
         }
         .feature-card {
             background: rgba(28, 16, 19, 0.85);
             border: 1px solid var(--card-border);
-            padding: 20px;
+            padding: 25px;
             border-radius: 16px;
             width: 260px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.5);
@@ -137,73 +138,17 @@
         }
         .feature-card:hover {
             border-color: var(--gold-light);
-            transform: translateY(-5px);
+            transform: translateY(-6px);
             box-shadow: 0 12px 25px rgba(218, 41, 28, 0.4);
         }
-        .feature-card .icon { font-size: 35px; margin-bottom: 8px; }
-        .feature-card h3 { color: var(--gold-light); margin-bottom: 8px; font-size: 18px; }
-        .feature-card p { color: var(--text-sub); font-size: 13px; margin: 0; line-height: 1.4; }
+        .feature-card .icon { font-size: 40px; margin-bottom: 10px; }
+        .feature-card h3 { color: var(--gold-light); margin-bottom: 10px; font-size: 20px; }
+        .feature-card p { color: var(--text-sub); font-size: 14px; margin: 0; line-height: 1.5; }
         .feature-card .click-hint {
-            margin-top: 12px;
-            font-size: 11px;
+            margin-top: 15px;
+            font-size: 12px;
             color: #ff9800;
             font-weight: 500;
-        }
-
-        /* ==========================================
-           📞 กล่องติดต่อร้านค้าแบบย่อส่วน (มุมขวาล่าง)
-        ========================================== */
-        .contact-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(28, 16, 19, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--gold-light);
-            border-radius: 12px;
-            padding: 12px 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
-            z-index: 1500;
-            max-width: 240px;
-        }
-        .contact-header {
-            font-weight: 700;
-            color: var(--gold-light);
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            border-bottom: 1px solid rgba(255,215,0,0.2);
-            padding-bottom: 4px;
-            text-align: center;
-        }
-        .contact-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 6px;
-            color: #ffffff;
-            font-size: 0.8rem;
-            text-decoration: none;
-        }
-        .contact-item:hover { color: var(--gold-light); }
-        .contact-badge {
-            background: var(--maroon-accent);
-            color: white;
-            padding: 2px 6px;
-            border-radius: 8px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-        .qr-preview-container {
-            text-align: center;
-            margin-top: 6px;
-            border-top: 1px dashed rgba(255,255,255,0.15);
-            padding-top: 6px;
-        }
-        .qr-preview {
-            width: 55px;
-            height: 55px;
-            border-radius: 6px;
-            border: 1px solid var(--gold-light);
         }
 
         /* -------------------------------------------------------------
@@ -269,7 +214,7 @@
         .modal-header h2 {
             margin: 0;
             color: var(--gold-light);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
         }
         .modal-body p {
             color: var(--text-main);
@@ -310,16 +255,16 @@
         <a href="index.html" class="active">🏠 หน้าแรก</a>
         <a href="products.html">🍖 เมนูอาหาร</a>
         <a href="checkout.html">🛒 ตะกร้าสินค้า</a>
-        <a href="admin.html">⚙️ จัดการระบบ</a>
+        <a onclick="openModal('modal-contact')" style="cursor: pointer;">📞 ติดต่อร้านค้า</a>
     </nav>
 
     <div class="hero">
         <div class="logo-wrapper">
-            <img src="logo.jpg" alt="โลโก้ร้านหมูกระทะย่างให้" class="logo-center">
+            <img src="logo.jpg" alt="โลโก้ร้านหมูกระทะย่างให้" class="logo-center" onerror="this.src='https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200&auto=format&fit=crop'">
         </div>
         
         <h1>🔥 หมูกระทะย่างให้ สด ใหม่ ทุกวัน 🥓</h1>
-        <p>สัมผัสความอร่อยระดับพรีเมียม หมูหมักนุ่มสูตรเด็ด น้ำจิ้มรสแซ่บ พร้อมบริการย่างให้สดๆ ร้อนๆ ส่งตรงถึงหน้าบ้านคุณ!</p>
+        <p>สัมผัสความอร่อยระดับพรีเมียม หมูหมักนุ่มสูตรเด็ด น้ำจิ้มรสแสบทรวง พร้อมบริการย่างให้สดๆ ร้อนๆ ส่งตรงถึงหน้าบ้านคุณ!</p>
         
         <a href="products.html" class="btn-start">👉 สั่งหมูกระทะเลยตอนนี้</a>
 
@@ -345,28 +290,6 @@
                 <p>สูตรโบราณเข้มข้น แซ่บครบรส มะนาวแท้ 100%</p>
                 <div class="click-hint">🔍 คลิกเพื่อดูส่วนผสมน้ำจิ้ม</div>
             </div>
-        </div>
-    </div>
-
-    <!-- 📞 กล่องติดต่อร้านค้าแบบย่อส่วน (มุมขวาล่าง) -->
-    <div class="contact-widget">
-        <div class="contact-header">
-            📞 ช่องทางติดต่อร้าน
-        </div>
-        
-        <a href="tel:0812345678" class="contact-item">
-            <span>📞 081-234-5678</span>
-            <span class="contact-badge">โทร</span>
-        </a>
-
-        <a href="https://line.me" target="_blank" class="contact-item">
-            <span>💬 @mookata</span>
-            <span class="contact-badge" style="background:#06c755;">ไลน์</span>
-        </a>
-
-        <div class="qr-preview-container">
-            <small style="color:var(--text-sub); display:block; font-size:0.7rem; margin-bottom:3px;">สแกนแอดไลน์</small>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me" alt="Line QR Code" class="qr-preview">
         </div>
     </div>
 
@@ -444,6 +367,32 @@
                 </ul>
             </div>
             <button class="modal-footer-btn" onclick="closeModal('modal-sauce')">เข้าใจแล้ว / ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <!-- =============================================================
+         POPUP 4: ช่องทางติดต่อร้าน (เพิ่มปุ่มกากบาทปิดได้แล้ว)
+    ============================================================= -->
+    <div id="modal-contact" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-contact')">
+        <div class="modal-content" style="text-align: center;">
+            <span class="modal-close" onclick="closeModal('modal-contact')">&times;</span>
+            <div class="modal-header" style="justify-content: center; border-bottom: 1px solid var(--card-border);">
+                <h2 style="color: var(--gold-light);">📞 ช่องทางติดต่อร้าน</h2>
+            </div>
+            <div class="modal-body" style="padding: 10px 0;">
+                <p style="margin-bottom: 15px; font-size: 1.1rem;">
+                    📞 โทร: <a href="tel:0812345678" style="color: var(--gold-light); text-decoration: none; font-weight: bold;">081-234-5678</a>
+                </p>
+                <p style="margin-bottom: 20px; font-size: 1.1rem;">
+                    💬 ไลน์: <span style="color: #4cd137; font-weight: bold;">@mookata</span>
+                </p>
+                <p style="color: var(--text-sub); margin-bottom: 10px; font-weight: 500;">สแกนแอดไลน์</p>
+                <div style="background: white; padding: 10px; display: inline-block; border-radius: 12px; border: 3px solid var(--gold-light);">
+                    <!-- เปลี่ยนลิงก์รูป QR Code ตามต้องการ -->
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me" alt="QR Code" style="width: 140px; height: 140px; display: block; border-radius: 6px;">
+                </div>
+            </div>
+            <button class="modal-footer-btn" onclick="closeModal('modal-contact')" style="margin-top: 20px;">ปิดหน้าต่าง</button>
         </div>
     </div>
 
