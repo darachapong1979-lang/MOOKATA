@@ -35,7 +35,7 @@
             min-height: 100vh;
         }
         
-        /* Navbar หรูหรา */
+        /* Navbar */
         nav { 
             background: rgba(28, 16, 19, 0.92);
             backdrop-filter: blur(10px);
@@ -63,7 +63,7 @@
 
         /* Hero Banner */
         .hero { 
-            padding: 60px 20px 40px; 
+            padding: 40px 20px; 
             max-width: 900px; 
             margin: 0 auto; 
             text-align: center;
@@ -72,11 +72,11 @@
         .logo-wrapper {
             position: relative;
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .logo-center {
-            width: 160px;
-            height: 160px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid var(--gold-light);
@@ -85,176 +85,210 @@
         
         .hero h1 { 
             color: #ffffff; 
-            font-size: 2.8rem; 
-            margin: 15px 0; 
+            font-size: 2.6rem; 
+            margin: 10px 0; 
             font-weight: 700;
             text-shadow: 0 4px 15px rgba(218, 41, 28, 0.8);
         }
         
         .hero p { 
             color: var(--text-sub); 
-            font-size: 1.25rem; 
-            margin-bottom: 35px; 
-            line-height: 1.7; 
+            font-size: 1.15rem; 
+            margin-bottom: 25px; 
+            line-height: 1.6; 
             font-weight: 300;
         }
+
+        /* 🎁 กล่องโปรโมชั่นพิเศษ */
+        .promo-box {
+            background: rgba(28, 16, 19, 0.9);
+            border: 1px solid var(--gold-light);
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin: 0 auto 25px auto;
+            max-width: 700px;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15);
+            text-align: left;
+            backdrop-filter: blur(5px);
+        }
+        .promo-title {
+            color: var(--gold-light);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+            justify-content: center;
+        }
+        .promo-item {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.5;
+        }
+        .promo-item strong {
+            color: var(--gold-light);
+            white-space: nowrap;
+        }
         
+        /* ปุ่มสั่งซื้อหลัก */
         .btn-start { 
             background: linear-gradient(135deg, #d32f2f, #8b0000); 
             color: white; 
-            padding: 16px 45px; 
-            font-size: 20px; 
+            padding: 15px 40px; 
+            font-size: 19px; 
             font-weight: 600; 
             text-decoration: none; 
             border-radius: 50px; 
             box-shadow: 0 8px 25px rgba(211, 47, 47, 0.5); 
             display: inline-block;
             border: 2px solid var(--gold-light);
+            margin-bottom: 20px;
         }
         .btn-start:hover { 
-            transform: translateY(-4px) scale(1.03);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 30px rgba(255, 215, 0, 0.4);
         }
 
-        /* การ์ดฟีเจอร์แบบกดได้ (Clickable Cards) */
+        /* ลิงก์รองเรียบๆ (เช็คสถานะ & แอดมิน) */
+        .sub-links-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 5px;
+            flex-wrap: wrap;
+        }
+        .text-link {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        .text-link:hover {
+            color: var(--gold-light);
+            text-decoration: underline;
+        }
+
+        .btn-admin-entry {
+            background: rgba(28, 16, 19, 0.85);
+            color: var(--gold-light);
+            padding: 6px 18px;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 50px;
+            display: inline-block;
+            border: 1px solid var(--card-border);
+            cursor: pointer;
+        }
+        .btn-admin-entry:hover {
+            border-color: var(--gold-light);
+        }
+
+        /* การ์ดฟีเจอร์ 3 ช่อง */
         .features {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 20px;
             flex-wrap: wrap;
-            margin-top: 50px;
+            margin-top: 35px;
         }
         .feature-card {
             background: rgba(28, 16, 19, 0.85);
             border: 1px solid var(--card-border);
-            padding: 25px;
-            border-radius: 16px;
-            width: 260px;
+            padding: 20px;
+            border-radius: 14px;
+            width: 250px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.5);
             text-align: center;
             backdrop-filter: blur(5px);
             cursor: pointer;
-            position: relative;
         }
         .feature-card:hover {
             border-color: var(--gold-light);
-            transform: translateY(-6px);
-            box-shadow: 0 12px 25px rgba(218, 41, 28, 0.4);
+            transform: translateY(-5px);
         }
-        .feature-card .icon { font-size: 40px; margin-bottom: 10px; }
-        .feature-card h3 { color: var(--gold-light); margin-bottom: 10px; font-size: 20px; }
-        .feature-card p { color: var(--text-sub); font-size: 14px; margin: 0; line-height: 1.5; }
+        .feature-card .icon { font-size: 35px; margin-bottom: 8px; }
+        .feature-card h3 { color: var(--gold-light); margin-bottom: 8px; font-size: 18px; }
+        .feature-card p { color: var(--text-sub); font-size: 13px; margin: 0; line-height: 1.4; }
         .feature-card .click-hint {
-            margin-top: 15px;
-            font-size: 12px;
+            margin-top: 10px;
+            font-size: 11px;
             color: #ff9800;
-            font-weight: 500;
         }
 
-        /* -------------------------------------------------------------
-           🎯 สไตล์สำหรับ POPUP MODAL (หน้าต่างเด้ง)
-        ------------------------------------------------------------- */
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.82);
             backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-content {
             background: var(--card-bg);
             border: 2px solid var(--gold-light);
             border-radius: 20px;
-            width: 90%;
-            max-width: 550px;
-            padding: 30px;
+            width: 90%; max-width: 450px; padding: 30px;
             position: relative;
             box-shadow: 0 15px 40px rgba(218, 41, 28, 0.5);
             transform: scale(0.8);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-align: left;
         }
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
         .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            color: var(--text-sub);
-            cursor: pointer;
-            line-height: 1;
+            position: absolute; top: 15px; right: 20px;
+            font-size: 28px; color: var(--text-sub); cursor: pointer; line-height: 1;
         }
-        .modal-close:hover {
-            color: var(--gold-light);
-        }
+        .modal-close:hover { color: var(--gold-light); }
         .modal-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--card-border);
-            padding-bottom: 15px;
+            display: flex; align-items: center; gap: 15px;
+            margin-bottom: 20px; border-bottom: 1px solid var(--card-border); padding-bottom: 15px;
         }
-        .modal-header .modal-icon { font-size: 45px; }
-        .modal-header h2 {
-            margin: 0;
-            color: var(--gold-light);
-            font-size: 1.6rem;
-        }
-        .modal-body p {
-            color: var(--text-main);
-            line-height: 1.7;
-            font-size: 15px;
-            margin-bottom: 15px;
-        }
-        .modal-body ul {
-            padding-left: 20px;
-            color: var(--text-sub);
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-        .modal-body li {
-            margin-bottom: 6px;
-        }
-        .modal-footer-btn {
-            background: linear-gradient(135deg, #d32f2f, #8b0000);
-            color: white;
-            border: none;
+        .modal-header h2 { margin: 0; color: var(--gold-light); font-size: 1.5rem; }
+        .modal-body p { color: var(--text-main); line-height: 1.7; font-size: 15px; margin-bottom: 15px; }
+        
+        .form-control {
             width: 100%;
             padding: 12px;
             border-radius: 10px;
+            background: #12080a;
+            border: 1px solid var(--card-border);
+            color: white;
             font-family: 'Prompt', sans-serif;
             font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
+            outline: none;
+            text-align: center;
+            letter-spacing: 2px;
         }
-        .modal-footer-btn:hover {
-            background: linear-gradient(135deg, #e53935, #b71c1c);
+        .form-control:focus { border-color: var(--gold-light); }
+
+        .modal-footer-btn {
+            background: linear-gradient(135deg, #d32f2f, #8b0000);
+            color: white; border: none; width: 100%; padding: 12px;
+            border-radius: 10px; font-family: 'Prompt', sans-serif;
+            font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 15px;
+            border: 1px solid var(--gold-light);
         }
+        .modal-footer-btn:hover { background: linear-gradient(135deg, #e53935, #b71c1c); }
     </style>
 </head>
 <body>
 
+    <!-- แถบเมนูด้านบน -->
     <nav>
         <a href="index.html" class="active">🏠 หน้าแรก</a>
-        <a href="products.html">🍖 เมนูอาหาร</a>
-        <a href="checkout.html">🛒 ตะกร้าสินค้า</a>
+        <a href="status.html">📦 เช็คสถานะออเดอร์</a>
         <a onclick="openModal('modal-contact')" style="cursor: pointer;">📞 ติดต่อร้านค้า</a>
     </nav>
 
@@ -266,47 +300,95 @@
         <h1>🔥 หมูกระทะย่างให้ สด ใหม่ ทุกวัน 🥓</h1>
         <p>สัมผัสความอร่อยระดับพรีเมียม หมูหมักนุ่มสูตรเด็ด น้ำจิ้มรสแสบทรวง พร้อมบริการย่างให้สดๆ ร้อนๆ ส่งตรงถึงหน้าบ้านคุณ!</p>
         
-        <a href="products.html" class="btn-start">👉 สั่งหมูกระทะเลยตอนนี้</a>
+        <!-- 🎁 กล่องโปรโมชั่นพิเศษ -->
+        <div class="promo-box">
+            <div class="promo-title">🎉 สิทธิพิเศษ & โปรโมชั่นสุดคุ้ม</div>
+            <div class="promo-item">
+                <span>🔥</span>
+                <div><strong>ซื้อครบ 999.- :</strong> ฟรี! น้ำจิ้ม 2 อย่าง (น้ำจิ้มงาคั่ว 200ml + น้ำจิ้มซีฟู้ด 200ml)</div>
+            </div>
+            <div class="promo-item" style="margin-top: 8px;">
+                <span>🌟</span>
+                <div><strong>ซื้อครบ 1,499.- :</strong> ฟรี! เป๊บซี่ขนาด 2 ลิตร 1 ขวด + น้ำจิ้มงาคั่ว 200ml + น้ำจิ้มซีฟู้ด 200ml</div>
+            </div>
+        </div>
 
-        <!-- ปุ่ม 3 ช่องเปิด Pop-up -->
+        <div>
+            <a href="products.html" class="btn-start">👉 สั่งหมูกระทะเลยตอนนี้</a>
+        </div>
+
+        <!-- ลิงก์เช็คสถานะและแอดมินแบบเรียบๆ -->
+        <div class="sub-links-container">
+            <a href="status.html" class="text-link">📦 เช็คสถานะออเดอร์ของคุณ</a>
+            <span style="color: var(--card-border);">|</span>
+            <a onclick="openModal('modal-admin-login')" class="btn-admin-entry">⚙️ ADMIN</a>
+        </div>
+
+        <!-- 3 ฟีเจอร์เด่น -->
         <div class="features">
             <div class="feature-card" onclick="openModal('modal-marinate')">
                 <div class="icon">🥩</div>
                 <h3>หมักนุ่มสูตรพิเศษ</h3>
                 <p>เนื้อหมูเกรดพรีเมียม หมักเข้าเนื้อ นุ่ม ละมุนทุกคำ</p>
-                <div class="click-hint">🔍 คลิกเพื่อดูสูตรหมักและแหล่งที่มา</div>
+                <div class="click-hint">🔍 คลิกเพื่อดูรายละเอียด</div>
             </div>
 
             <div class="feature-card" onclick="openModal('modal-grill')">
                 <div class="icon">🔥</div>
                 <h3>ย่างสดใหม่ร้อนๆ</h3>
                 <p>ย่างด้วยเตาถ่านหอมๆ พร้อมทาน ไม่ต้องจุดเตาเอง</p>
-                <div class="click-hint">🔍 คลิกเพื่อดูรายละเอียดการย่าง</div>
+                <div class="click-hint">🔍 คลิกเพื่อดูรายละเอียด</div>
             </div>
 
             <div class="feature-card" onclick="openModal('modal-sauce')">
                 <div class="icon">🌶️</div>
                 <h3>น้ำจิ้มรสเด็ด</h3>
                 <p>สูตรโบราณเข้มข้น แซ่บครบรส มะนาวแท้ 100%</p>
-                <div class="click-hint">🔍 คลิกเพื่อดูส่วนผสมน้ำจิ้ม</div>
+                <div class="click-hint">🔍 คลิกเพื่อดูรายละเอียด</div>
             </div>
         </div>
     </div>
 
     <!-- =============================================================
-         POPUP 1: หมักนุ่มสูตรพิเศษ
+         Modal: หน้าต่างใส่รหัสผ่านแอดมิน
     ============================================================= -->
+    <div id="modal-admin-login" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-admin-login')">
+        <div class="modal-content" style="text-align: center;">
+            <span class="modal-close" onclick="closeModal('modal-admin-login')">×</span>
+            <div class="modal-header" style="justify-content: center; border-bottom: 1px solid var(--card-border);">
+                <h2 style="color: var(--gold-light);">🔐 เข้าสู่ระบบผู้ดูแลระบบ</h2>
+            </div>
+            <div class="modal-body" style="padding: 10px 0;">
+                <p style="color: var(--text-sub); margin-bottom: 15px;">กรุณากรอกรหัสผ่านเพื่อเข้าสู่หน้าจัดการหลังบ้าน</p>
+                <input type="password" id="admin-password" class="form-control" placeholder="••••" onkeydown="checkEnter(event)">
+            </div>
+            <button class="modal-footer-btn" onclick="verifyAdmin()">ยืนยันรหัสผ่าน</button>
+        </div>
+    </div>
+
+    <!-- 🌟 Custom Alert Modal (แทนที่ alert ของเบราว์เซอร์) -->
+    <div id="custom-alert-modal" class="modal-overlay" onclick="closeCustomAlertOnOverlay(event)">
+        <div class="modal-content" style="text-align: center; max-width: 380px;">
+            <div class="modal-header" style="justify-content: center; border-bottom: 1px solid var(--card-border);">
+                <h2 id="custom-alert-title" style="color: var(--gold-light); font-size: 1.3rem;">แจ้งเตือน</h2>
+            </div>
+            <div class="modal-body" style="padding: 20px 0;">
+                <p id="custom-alert-msg" style="color: var(--text-main); font-size: 1.05rem; margin-bottom: 0; line-height: 1.5;"></p>
+            </div>
+            <button class="modal-footer-btn" onclick="closeCustomAlert()" style="margin-top: 10px;">ตกลง</button>
+        </div>
+    </div>
+
+    <!-- Modal 1: สูตรหมัก -->
     <div id="modal-marinate" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-marinate')">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('modal-marinate')">&times;</span>
+            <span class="modal-close" onclick="closeModal('modal-marinate')">×</span>
             <div class="modal-header">
-                <span class="modal-icon">🥩</span>
+                <span class="modal-icon" style="font-size: 40px;">🥩</span>
                 <h2>สูตรหมักนุ่ม & แหล่งที่มาเนื้อหมู</h2>
             </div>
             <div class="modal-body">
-                <p><strong>🏡 คัดสรรจากฟาร์มมาตรฐานสูง:</strong><br>
-                เราคัดเลือกเฉพาะเนื้อหมูส่วนสันนอกและสามชั้นชั้นดี จากฟาร์มปิดที่ได้รับการรับรองมาตรฐานความสะอาด ปลอดสารเร่งเนื้อแดง สด ใหม่ วันต่อวัน</p>
-                
+                <p><strong>🏡 คัดสรรจากฟาร์มมาตรฐานสูง:</strong><br>เราคัดเลือกเฉพาะเนื้อหมูส่วนสันนอกและสามชั้นชั้นดี จากฟาร์มปิดที่ได้รับการรับรองมาตรฐานความสะอาด ปลอดสารเร่งเนื้อแดง สด ใหม่ วันต่อวัน</p>
                 <p><strong>✨ สูตรซอสหมักลับฉบับทางร้าน:</strong></p>
                 <ul>
                     <li>หมักด้วยซอสสูตรลับเข้มข้น นานกว่า 12 ชั่วโมง</li>
@@ -319,20 +401,16 @@
         </div>
     </div>
 
-    <!-- =============================================================
-         POPUP 2: ย่างสดใหม่ร้อนๆ
-    ============================================================= -->
+    <!-- Modal 2: ย่างสดใหม่ -->
     <div id="modal-grill" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-grill')">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('modal-grill')">&times;</span>
+            <span class="modal-close" onclick="closeModal('modal-grill')">×</span>
             <div class="modal-header">
-                <span class="modal-icon">🔥</span>
+                <span class="modal-icon" style="font-size: 40px;">🔥</span>
                 <h2>บริการย่างสดใหม่ร้อนๆ</h2>
             </div>
             <div class="modal-body">
-                <p><strong>🔥 ย่างด้วยเตาถ่านหอมกลิ่นควันธรรมชาติ:</strong><br>
-                เราใช้เตาถ่านไม้โกงกางที่ให้ความร้อนสม่ำเสมอ ย่างโดยเชฟฝีมือเยี่ยม ชิ้นต่อชิ้น เพื่อให้เนื้อหมูสุกกำลังดี ด้านนอกเกรียมหอม ด้านในยังคงความฉ่ำนุ่ม (Juicy)</p>
-                
+                <p><strong>🔥 ย่างด้วยเตาถ่านหอมกลิ่นควันธรรมชาติ:</strong><br>เราใช้เตาถ่านไม้โกงกางที่ให้ความร้อนสม่ำเสมอ ย่างโดยเชฟฝีมือเยี่ยม ชิ้นต่อชิ้น เพื่อให้เนื้อหมูสุกกำลังดี</p>
                 <p><strong>🚀 บรรจุภัณฑ์รักษาความร้อน:</strong></p>
                 <ul>
                     <li>ย่างใหม่ทันทีตามออเดอร์ (Made-to-Order) ไม่มีทำค้างไว้</li>
@@ -344,20 +422,16 @@
         </div>
     </div>
 
-    <!-- =============================================================
-         POPUP 3: น้ำจิ้มรสเด็ด
-    ============================================================= -->
+    <!-- Modal 3: น้ำจิ้มรสเด็ด -->
     <div id="modal-sauce" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-sauce')">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('modal-sauce')">&times;</span>
+            <span class="modal-close" onclick="closeModal('modal-sauce')">×</span>
             <div class="modal-header">
-                <span class="modal-icon">🌶️</span>
+                <span class="modal-icon" style="font-size: 40px;">🌶️</span>
                 <h2>สูตรเด็ดน้ำจิ้มหมูกระทะโบราณ</h2>
             </div>
             <div class="modal-body">
-                <p><strong>🌶️ รสชาติเผ็ดแซ่บ กลมกล่อม ครบรส:</strong><br>
-                น้ำจิ้มสูตรโบราณดั้งเดิม รสชาติเผ็ด เปรี้ยว หวาน เค็ม เคี่ยวจนงวดเข้มข้น หอมกลิ่นพริกกระเทียมเตะจมูก</p>
-                
+                <p><strong>🌶️ รสชาติเผ็ดแซ่บ กลมกล่อม ครบรส:</strong><br>น้ำจิ้มสูตรโบราณดั้งเดิม รสชาติเผ็ด เปรี้ยว หวาน เค็ม เคี่ยวจนงวดเข้มข้น</p>
                 <p><strong>🧄 ส่วนผสมสำคัญที่เราเลือกใช้:</strong></p>
                 <ul>
                     <li>พริกขี้หนูสวนสด แท้ 100% เพิ่มความเผ็ดร้อนสะใจ</li>
@@ -370,12 +444,10 @@
         </div>
     </div>
 
-    <!-- =============================================================
-         POPUP 4: ช่องทางติดต่อร้าน (เพิ่มปุ่มกากบาทปิดได้แล้ว)
-    ============================================================= -->
+    <!-- Modal 4: ช่องทางติดต่อร้าน -->
     <div id="modal-contact" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-contact')">
         <div class="modal-content" style="text-align: center;">
-            <span class="modal-close" onclick="closeModal('modal-contact')">&times;</span>
+            <span class="modal-close" onclick="closeModal('modal-contact')">×</span>
             <div class="modal-header" style="justify-content: center; border-bottom: 1px solid var(--card-border);">
                 <h2 style="color: var(--gold-light);">📞 ช่องทางติดต่อร้าน</h2>
             </div>
@@ -388,7 +460,6 @@
                 </p>
                 <p style="color: var(--text-sub); margin-bottom: 10px; font-weight: 500;">สแกนแอดไลน์</p>
                 <div style="background: white; padding: 10px; display: inline-block; border-radius: 12px; border: 3px solid var(--gold-light);">
-                    <!-- เปลี่ยนลิงก์รูป QR Code ตามต้องการ -->
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me" alt="QR Code" style="width: 140px; height: 140px; display: block; border-radius: 6px;">
                 </div>
             </div>
@@ -396,22 +467,69 @@
         </div>
     </div>
 
-    <!-- JavaScript ควบคุมการเปิด-ปิด Pop-up -->
+    <!-- Script ควบคุม Modal และระบบ Custom Alert -->
     <script>
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
+            if (modalId === 'modal-admin-login') {
+                setTimeout(() => {
+                    document.getElementById('admin-password').focus();
+                }, 200);
+            }
         }
-
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
+            if (modalId === 'modal-admin-login') {
+                document.getElementById('admin-password').value = '';
+            }
         }
-
         function closeModalOnOverlay(event, modalId) {
             if (event.target.classList.contains('modal-overlay')) {
                 closeModal(modalId);
             }
         }
-    </script>
 
+        // ระบบ Custom Alert แทน alert() ของเบราว์เซอร์
+        let alertCallback = null;
+        function showCustomAlert(title, message, callback) {
+            document.getElementById('custom-alert-title').textContent = title;
+            document.getElementById('custom-alert-msg').textContent = message;
+            alertCallback = callback || null;
+            document.getElementById('custom-alert-modal').classList.add('active');
+        }
+        function closeCustomAlert() {
+            document.getElementById('custom-alert-modal').classList.remove('active');
+            if (alertCallback) {
+                alertCallback();
+                alertCallback = null;
+            }
+        }
+        function closeCustomAlertOnOverlay(event) {
+            if (event.target.id === 'custom-alert-modal') {
+                closeCustomAlert();
+            }
+        }
+
+        // ฟังก์ชันตรวจสอบรหัสผ่านแอดมิน
+        function verifyAdmin() {
+            const password = document.getElementById('admin-password').value;
+            if (password === '1234') {
+                closeModal('modal-admin-login');
+                showCustomAlert('🎉 สำเร็จ', 'เข้าสู่ระบบสำเร็จ!', function() {
+                    window.location.href = 'admin.html';
+                });
+            } else {
+                showCustomAlert('❌ ผิดพลาด', 'รหัสผ่านไม่ถูกต้อง! กรุณาลองใหม่อีกครั้ง');
+                document.getElementById('admin-password').value = '';
+                document.getElementById('admin-password').focus();
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                verifyAdmin();
+            }
+        }
+    </script>
 </body>
 </html>
