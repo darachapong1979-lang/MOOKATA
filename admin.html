@@ -32,308 +32,323 @@
             background-attachment: fixed;
             min-height: 100vh;
         }
-        
+
+        /* Navbar หลังบ้าน (แสดงโลโก้ร้าน + MOOKATA ADMIN) */
         nav { 
-            background: rgba(28, 16, 19, 0.92);
+            background: rgba(28, 16, 19, 0.95);
             backdrop-filter: blur(10px);
-            padding: 16px 30px; 
+            padding: 12px 30px; 
             display: flex; 
-            justify-content: center; 
-            gap: 35px; 
+            justify-content: space-between;
+            align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.8); 
             border-bottom: 2px solid var(--maroon-accent);
         }
-        nav a { color: var(--text-sub); text-decoration: none; font-weight: 500; font-size: 17px; }
-        nav a:hover, nav a.active { color: var(--gold-light); }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .nav-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold-light);
+        }
+        .nav-title-text {
+            color: var(--gold-light);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        nav a { 
+            color: var(--text-sub); 
+            text-decoration: none; 
+            font-weight: 500; 
+            font-size: 15px; 
+            background: rgba(255,255,255,0.05); 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            border: 1px solid var(--card-border); 
+        }
+        nav a:hover { color: var(--gold-light); border-color: var(--gold-light); }
 
         .container { 
             max-width: 1200px; 
-            margin: 40px auto; 
-            background: var(--card-bg); 
-            border: 1px solid var(--card-border);
-            padding: 35px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7); 
+            margin: 30px auto; 
+            padding: 0 20px;
         }
 
-        h2 { color: #ffffff; text-align: center; margin-top: 0; margin-bottom: 25px; font-weight: 600; }
+        h2.page-title { text-align: center; color: var(--gold-light); margin-bottom: 25px; }
 
-        .stats-box { display: flex; gap: 20px; margin-bottom: 30px; }
-        .stat-card { 
-            background: #12080a; 
-            border: 1px solid var(--card-border);
-            border-left: 5px solid var(--gold-light); 
-            padding: 20px; 
-            border-radius: 12px; 
-            flex: 1; 
-            text-align: center; 
+        /* 📊 แผงสถิติ 5 ช่องด้านบน */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
-        .stat-card p { margin: 0 0 8px 0; color: var(--text-sub); font-size: 15px; }
-        .stat-card h3 { margin: 0; color: var(--gold-light); font-size: 26px; font-weight: 700; }
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        .stat-card h4 { margin: 0 0 10px 0; color: var(--text-sub); font-size: 0.95rem; font-weight: 500; }
+        .stat-card .stat-value { font-size: 1.6rem; font-weight: 700; color: var(--gold-light); }
 
-        .btn-clear { 
-            background: rgba(255,255,255,0.08); 
-            color: #ff6b6b; 
-            border: 1px solid rgba(255,107,107,0.3); 
-            padding: 10px 20px; 
-            border-radius: 8px; 
-            cursor: pointer; 
+        /* ปุ่มล้างข้อมูล */
+        .action-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .btn-danger {
+            background: #5c061c;
+            color: white;
+            border: 1px solid #8b0000;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
             font-family: 'Prompt', sans-serif;
-            font-weight: 500; 
-            margin-bottom: 20px; 
             font-size: 14px;
         }
-        .btn-clear:hover { background: rgba(255, 107, 107, 0.2); }
+        .btn-danger:hover { background: #800020; }
 
-        table { 
-            width: 100%; 
-            border-collapse: separate; 
-            border-spacing: 0;
-            margin-top: 15px; 
-            border-radius: 12px;
-            overflow: hidden;
+        /* ตารางแสดงออเดอร์ (รองรับเลื่อนซ้ายขวาบนจอมือถือ) */
+        .table-responsive {
+            background: var(--card-bg);
             border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            margin-bottom: 40px;
         }
-        th, td { padding: 14px 16px; text-align: left; font-size: 14px; }
-        th { background-color: var(--maroon-accent); color: #ffffff; font-weight: 600; }
-        td { background-color: #12080a; color: var(--text-sub); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        table {
+            width: 100%;
+            min-width: 950px;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background: rgba(139, 0, 0, 0.4);
+            color: var(--gold-light);
+            padding: 14px 16px;
+            font-weight: 600;
+            border-bottom: 2px solid var(--maroon-accent);
+            white-space: nowrap;
+        }
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-sub);
+            vertical-align: top;
+        }
+        tr:hover { background: rgba(255,255,255,0.02); }
 
-        td ul { margin: 0; padding-left: 18px; color: #ffffff; }
-        td ul li { margin-bottom: 4px; }
-
-        .btn-action { 
-            background-color: rgba(255, 107, 107, 0.15); 
-            color: #ff6b6b; 
-            border: 1px solid rgba(255, 107, 107, 0.3); 
-            padding: 6px 14px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-size: 13px; 
+        .select-status {
+            background: #12080a;
+            color: white;
+            border: 1px solid var(--card-border);
+            padding: 8px;
+            border-radius: 8px;
             font-family: 'Prompt', sans-serif;
-            margin-top: 5px;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
         }
-        .btn-action:hover { background-color: rgba(255, 107, 107, 0.3); }
+        .select-status:focus { border-color: var(--gold-light); }
 
-        .btn-slip {
-            background-color: rgba(33, 150, 243, 0.15);
-            color: #64b5f6;
-            border: 1px solid rgba(33, 150, 243, 0.3);
+        .btn-delete-row {
+            background: #5c061c;
+            color: white;
+            border: none;
             padding: 6px 12px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
-            font-family: 'Prompt', sans-serif;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 6px;
         }
-        .btn-slip:hover { background-color: rgba(33, 150, 243, 0.3); }
+        .btn-delete-row:hover { background: #800020; }
 
-        .status-select {
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-family: 'Prompt', sans-serif;
-            font-size: 12px;
-            font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.2);
-            cursor: pointer;
-            outline: none;
-            margin-top: 6px;
-        }
-        
-        .status-pending { background-color: rgba(255, 152, 0, 0.2); color: #ffb74d; border-color: #ff9800; }
-        .status-done { background-color: rgba(33, 150, 243, 0.2); color: #64b5f6; border-color: #2196f3; }
-        .status-delivered { background-color: rgba(76, 175, 80, 0.2); color: #81c784; border-color: #4caf50; }
-        .status-canceled { background-color: rgba(244, 67, 54, 0.2); color: #e57373; border-color: #f44336; }
-
-        .pay-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .pay-cod { background: rgba(255,193,7,0.15); color: #ffc107; border: 1px solid rgba(255,193,7,0.3); }
-        .pay-transfer { background: rgba(0,230,118,0.15); color: #00e676; border: 1px solid rgba(0,230,118,0.3); }
-
-        /* Modal สำหรับแสดงรูปสลิป */
-        #slip-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        #slip-modal img {
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 12px;
-            border: 2px solid var(--gold-light);
-        }
-        .close-modal {
-            position: absolute;
-            top: 20px; right: 30px;
-            color: white; font-size: 35px; font-weight: bold;
-            cursor: pointer;
+        .no-orders {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-sub);
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html">🏠 หน้าแรก</a>
-        <a href="products.html">🍖 เมนูอาหาร</a>
-        <a href="checkout.html">🛒 ตะกร้าสินค้า</a>
-        <a href="admin.html" class="active">⚙️ จัดการระบบ (Admin)</a>
+        <div class="nav-brand">
+            <img src="logo.jpg" alt="Logo" class="nav-logo" onerror="this.src='https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200&auto=format&fit=crop'">
+            <span class="nav-title-text">MOOKATA ADMIN</span>
+        </div>
+        <a href="index.html">🏠 กลับสู่หน้าเว็บไซต์</a>
     </nav>
 
     <div class="container">
-        <h2>⚙️ ระบบจัดการหลังบ้าน (ตรวจสอบออเดอร์และการชำระเงิน)</h2>
-        
-        <div class="stats-box">
+        <h2 class="page-title">🛡️ ระบบจัดการหลังบ้าน (ตรวจสอบออเดอร์และยอดขาย)</h2>
+
+        <!-- 📊 กล่องสรุปสถานะ 5 ช่อง -->
+        <div class="stats-grid">
             <div class="stat-card">
-                <p>จำนวนออเดอร์ทั้งหมด</p>
-                <h3 id="total-orders">0</h3>
+                <h4>📦 ออเดอร์ทั้งหมด</h4>
+                <div id="stat-total" class="stat-value">0</div>
             </div>
-            <div class="stat-card" style="border-left-color: #2e7d32;">
-                <p>ยอดขายรวมทั้งหมด</p>
-                <h3 id="total-sales">0 ฿</h3>
+            <div class="stat-card">
+                <h4>👍 รับออเดอร์แล้ว</h4>
+                <div id="stat-accepted" class="stat-value" style="color: #4cd137;">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>🚚 จัดส่งแล้ว</h4>
+                <div id="stat-shipped" class="stat-value" style="color: #00cec9;">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>💰 ยอดขายรวม</h4>
+                <div id="stat-sales" class="stat-value">0 ฿</div>
+            </div>
+            <div class="stat-card">
+                <h4>❌ ยกเลิก</h4>
+                <div id="stat-cancelled" class="stat-value" style="color: #ff7675;">0</div>
             </div>
         </div>
 
-        <button class="btn-clear" onclick="clearAllOrders()">🗑️ ล้างประวัติออเดอร์ทั้งหมด</button>
+        <div class="action-bar">
+            <button class="btn-danger" onclick="clearAllOrders()">🗑️ ล้างประวัติออเดอร์ทั้งหมด</button>
+        </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>#ออเดอร์</th>
-                    <th>ชื่อผู้รับ / โทร</th>
-                    <th>รายการสินค้า</th>
-                    <th>ที่อยู่จัดส่ง</th>
-                    <th>การชำระเงิน / สลิป</th>
-                    <th>ราคารวม</th>
-                    <th>สถานะออเดอร์</th>
-                    <th>จัดการ</th>
-                </tr>
-            </thead>
-            <tbody id="order-table-body">
-                <tr>
-                    <td colspan="8" style="text-align: center; color: var(--text-sub); padding: 30px;">ยังไม่มีรายการสั่งซื้อเข้ามา...</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Modal สำหรับดูรูปสลิป -->
-    <div id="slip-modal" onclick="closeSlipModal()">
-        <span class="close-modal">&times;</span>
-        <img id="modal-slip-img" src="" alt="สลิปโอนเงิน">
+        <!-- ตารางจัดการออเดอร์ -->
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#ออเดอร์</th>
+                        <th>ชื่อผู้รับ / โทร</th>
+                        <th>รายการสินค้า</th>
+                        <th>ที่อยู่จัดส่ง & หมายเหตุ</th>
+                        <th>การชำระเงิน</th>
+                        <th>ราคารวม</th>
+                        <th>สถานะออเดอร์</th>
+                        <th>จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-orders-tbody">
+                    <!-- โหลดข้อมูลด้วย JavaScript -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        function loadOrders() {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            const tbody = document.getElementById('order-table-body');
-            const totalOrdersEl = document.getElementById('total-orders');
-            const totalSalesEl = document.getElementById('total-sales');
+        function loadAdminOrders() {
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const tbody = document.getElementById('admin-orders-tbody');
+            
+            let totalOrders = orders.length;
+            let acceptedCount = 0;
+            let shippedCount = 0;
+            let cancelledCount = 0;
+            let totalSales = 0;
 
             tbody.innerHTML = '';
-            let totalSales = 0;
-            totalOrdersEl.textContent = orders.length;
 
             if (orders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-sub); padding: 30px;">ยังไม่มีรายการสั่งซื้อเข้ามา...</td></tr>`;
-                totalSalesEl.textContent = '0 ฿';
+                tbody.innerHTML = `<tr><td colspan="8" class="no-orders">ยังไม่มีคำสั่งซื้อในระบบ...</td></tr>`;
+                updateStats(0, 0, 0, 0, 0);
                 return;
             }
 
             orders.forEach((order, index) => {
-                totalSales += order.totalPrice;
-
-                let itemsHtml = '<ul>';
-                order.items.forEach(item => {
-                    itemsHtml += `<li>${item.name} (${item.price} ฿)</li>`;
-                });
-                itemsHtml += '</ul>';
-
-                const currentStatus = order.status || 'รอดำเนินการ (กำลังย่าง)';
-                let statusClass = 'status-pending';
-                if (currentStatus.includes('ย่างเสร็จ')) statusClass = 'status-done';
-                if (currentStatus.includes('ส่งเรียบร้อย')) statusClass = 'status-delivered';
-                if (currentStatus.includes('ยกเลิก')) statusClass = 'status-canceled';
-
-                const paymentMethod = order.paymentMethod || 'โอนเงินผ่านธนาคาร';
-                const payBadgeClass = paymentMethod.includes('ปลายทาง') ? 'pay-cod' : 'pay-transfer';
-                
-                let paymentHtml = `<span class="pay-badge ${payBadgeClass}">${paymentMethod}</span>`;
-                if (order.slip) {
-                    paymentHtml += `<br><button class="btn-slip" onclick="viewSlip('${order.slip}')">🔍 ตรวจสอบสลิป</button>`;
-                } else if (!paymentMethod.includes('ปลายทาง')) {
-                    paymentHtml += `<br><small style="color:#ff6b6b;">(ยังไม่แนบสลิป)</small>`;
+                let orderTotal = parseFloat(order.total);
+                if (isNaN(orderTotal) && order.items) {
+                    orderTotal = order.items.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
                 }
+                if (isNaN(orderTotal)) orderTotal = 0;
+
+                const currentStatus = order.status || "กำลังเตรียมวัตถุดิบ";
+
+                if (currentStatus === "รับออเดอร์แล้ว") acceptedCount++;
+                if (currentStatus === "จัดส่งสำเร็จ" || currentStatus === "กำลังจัดส่ง") shippedCount++;
+                if (currentStatus === "ยกเลิก") {
+                    cancelledCount++;
+                } else {
+                    totalSales += orderTotal;
+                }
+
+                let itemsListHtml = order.items ? order.items.map(i => `• ${i.name} (${i.price || 0} ฿)`).join('<br>') : 'ไม่มีรายการ';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><strong style="color:var(--gold-light);">#ORD-${1000 + index}</strong></td>
-                    <td><span style="color:#ffffff; font-weight:500;">${order.name}</span><br><small style="color:var(--text-sub);">📞 ${order.phone}</small></td>
-                    <td>${itemsHtml}</td>
-                    <td><small style="color:var(--text-sub);">${order.address}</small></td>
-                    <td>${paymentHtml}</td>
-                    <td><strong style="color:var(--gold-light);">${order.totalPrice} ฿</strong></td>
+                    <td><strong>${order.id || ('#ORD-' + (1000 + index))}</strong><br><span style="font-size:11px; color:#aaa;">${order.date || 'วันนี้'}</span></td>
+                    <td><strong>${order.name}</strong><br>📞 ${order.phone}</td>
+                    <td style="font-size: 13px;">${itemsListHtml}</td>
+                    <td>${order.address} ${order.note ? '<br><span style="color:var(--gold-light);">📝 ' + order.note + '</span>' : ''}</td>
+                    <td>${order.paymentMethod}</td>
+                    <td><strong style="color:var(--gold-light);">${orderTotal} ฿</strong></td>
                     <td>
-                        <select class="status-select ${statusClass}" onchange="changeStatus(${index}, this.value)">
-                            <option value="รอดำเนินการ (กำลังย่าง)" ${currentStatus === 'รอดำเนินการ (กำลังย่าง)' ? 'selected' : ''}>🔴 กำลังย่าง</option>
-                            <option value="ย่างเสร็จแล้ว (กำลังจัดส่ง)" ${currentStatus === 'ย่างเสร็จแล้ว (กำลังจัดส่ง)' ? 'selected' : ''}>🟡 ย่างเสร็จ/กำลังส่ง</option>
-                            <option value="ส่งเรียบร้อยแล้ว" ${currentStatus === 'ส่งเรียบร้อยแล้ว' ? 'selected' : ''}>🟢 ส่งเรียบร้อยแล้ว</option>
-                            <option value="ยกเลิกออเดอร์ (สินค้าหมด)" ${currentStatus === 'ยกเลิกออเดอร์ (สินค้าหมด)' ? 'selected' : ''}>❌ ยกเลิก (สินค้าหมด)</option>
+                        <select class="select-status" onchange="updateOrderStatus(${index}, this.value)">
+                            <option value="กำลังเตรียมวัตถุดิบ" ${currentStatus === 'กำลังเตรียมวัตถุดิบ' ? 'selected' : ''}>⏳ กำลังเตรียมวัตถุดิบ</option>
+                            <option value="รับออเดอร์แล้ว" ${currentStatus === 'รับออเดอร์แล้ว' ? 'selected' : ''}>👍 รับออเดอร์แล้ว</option>
+                            <option value="กำลังย่างบนเตา" ${currentStatus === 'กำลังย่างบนเตา' ? 'selected' : ''}>🔥 กำลังย่างบนเตา</option>
+                            <option value="กำลังจัดส่ง" ${currentStatus === 'กำลังจัดส่ง' ? 'selected' : ''}>🛵 กำลังจัดส่ง</option>
+                            <option value="จัดส่งสำเร็จ" ${currentStatus === 'จัดส่งสำเร็จ' ? 'selected' : ''}>✅ จัดส่งสำเร็จ</option>
+                            <option value="ยกเลิก" ${currentStatus === 'ยกเลิก' ? 'selected' : ''}>❌ ยกเลิก</option>
                         </select>
                     </td>
-                    <td><button class="btn-action" onclick="deleteOrder(${index})">ลบ</button></td>
+                    <td>
+                        <button class="btn-delete-row" onclick="deleteOrder(${index})">ลบ</button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            totalSalesEl.textContent = totalSales + ' ฿';
+            updateStats(totalOrders, acceptedCount, shippedCount, totalSales, cancelledCount);
         }
 
-        function viewSlip(slipDataUrl) {
-            const modal = document.getElementById('slip-modal');
-            const modalImg = document.getElementById('modal-slip-img');
-            modalImg.src = slipDataUrl;
-            modal.style.display = 'flex';
+        function updateStats(total, accepted, shipped, sales, cancelled) {
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-accepted').textContent = accepted;
+            document.getElementById('stat-shipped').textContent = shipped;
+            document.getElementById('stat-sales').textContent = sales.toLocaleString() + ' ฿';
+            document.getElementById('stat-cancelled').textContent = cancelled;
         }
 
-        function closeSlipModal() {
-            document.getElementById('slip-modal').style.display = 'none';
-        }
-
-        function changeStatus(index, newStatus) {
+        function updateOrderStatus(index, newStatus) {
             let orders = JSON.parse(localStorage.getItem('orders')) || [];
-            orders[index].status = newStatus;
-            localStorage.setItem('orders', JSON.stringify(orders));
-            loadOrders();
-        }
-
-        function deleteOrder(index) {
-            let orders = JSON.parse(localStorage.getItem('orders')) || [];
-            orders.splice(index, 1);
-            localStorage.setItem('orders', JSON.stringify(orders));
-            loadOrders();
-        }
-
-        function clearAllOrders() {
-            if (confirm('คุณต้องการล้างประวัติออเดอร์ทั้งหมดจริงหรือ?')) {
-                localStorage.removeItem('orders');
-                loadOrders();
+            if (orders[index]) {
+                orders[index].status = newStatus;
+                localStorage.setItem('orders', JSON.stringify(orders));
+                loadAdminOrders();
             }
         }
 
-        loadOrders();
+        function deleteOrder(index) {
+            if (confirm('คุณต้องการลบออเดอร์นี้ใช่หรือไม่?')) {
+                let orders = JSON.parse(localStorage.getItem('orders')) || [];
+                orders.splice(index, 1);
+                localStorage.setItem('orders', JSON.stringify(orders));
+                loadAdminOrders();
+            }
+        }
+
+        function clearAllOrders() {
+            if (confirm('⚠️ คุณแน่ใจหรือไม่ที่จะลบประวัติออเดอร์ทั้งหมด?')) {
+                localStorage.removeItem('orders');
+                loadAdminOrders();
+            }
+        }
+
+        loadAdminOrders();
     </script>
 </body>
 </html>
