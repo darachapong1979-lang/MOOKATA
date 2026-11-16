@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตรวจสอบสถานะออเดอร์ - หมูกระทะย่างให้</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #12080a;
+            --card-bg: #1c1013;
+            --card-border: #3d1c24;
+            --maroon-accent: #8b0000;
+            --gold-light: #ffd700;
+            --text-main: #ffffff;
+            --text-sub: #d1c4c6;
+        }
+
+        * { box-sizing: border-box; transition: all 0.25s ease; }
+
+        body { 
+            font-family: 'Prompt', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 0; 
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(218, 41, 28, 0.2), transparent 60%),
+                linear-gradient(rgba(18, 8, 10, 0.92), rgba(18, 8, 10, 0.96)),
+                url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        nav { 
+            background: rgba(28, 16, 19, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 16px 30px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 35px; 
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8); 
+            border-bottom: 2px solid var(--maroon-accent);
+        }
+        nav a { color: var(--text-sub); text-decoration: none; font-weight: 500; font-size: 17px; }
+        nav a:hover, nav a.active { color: var(--gold-light); }
+
+        .container { 
+            max-width: 800px; 
+            margin: 40px auto; 
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border);
+            padding: 35px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7); 
+        }
+
+        h2 { color: var(--gold-light); text-align: center; margin-top: 0; margin-bottom: 20px; }
+        p.subtitle { text-align: center; color: var(--text-sub); margin-bottom: 30px; }
+
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .form-control {
+            flex: 1;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: #12080a;
+            color: white;
+            font-family: 'Prompt', sans-serif;
+            font-size: 16px;
+            outline: none;
+        }
+        .form-control:focus { border-color: var(--gold-light); }
+
+        .btn-search {
+            background: linear-gradient(135deg, #d32f2f, #8b0000);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 10px;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-search:hover { background: linear-gradient(135deg, #e53935, #b71c1c); }
+
+        .order-card {
+            background: #12080a;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        .order-id { color: var(--gold-light); font-weight: bold; font-size: 1.1rem; }
+        .order-date { color: var(--text-sub); font-size: 13px; }
+
+        .order-details p { margin: 6px 0; color: var(--text-sub); font-size: 14px; }
+        .order-details strong { color: white; }
+
+        .timeline {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--card-border);
+        }
+        .timeline-title { color: var(--gold-light); font-size: 1rem; font-weight: 600; margin-bottom: 15px; }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 10px;
+        }
+        .step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+        .step-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #2a1519;
+            border: 2px solid var(--card-border);
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px auto;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .step.active .step-icon {
+            background: var(--gold-light);
+            border-color: var(--gold-light);
+            color: #12080a;
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+        }
+        .step.completed .step-icon {
+            background: #2e7d32;
+            border-color: #2e7d32;
+            color: white;
+        }
+        .step-text {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+        .step.active .step-text {
+            color: var(--gold-light);
+            font-weight: bold;
+        }
+
+        .no-result {
+            text-align: center;
+            color: var(--text-sub);
+            padding: 30px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- แถบเมนูด้านบน (เหลือเฉพาะ หน้าแรก และ เช็คสถานะออเดอร์) -->
+    <nav>
+        <a href="index.html">🏠 หน้าแรก</a>
+        <a href="status.html" class="active">📦 เช็คสถานะออเดอร์</a>
+    </nav>
+
+    <div class="container">
+        <h2>🔍 ตรวจสอบสถานะคำสั่งซื้อ</h2>
+        <p class="subtitle">กรอกเบอร์โทรศัพท์มือถือที่คุณใช้สั่งซื้อเพื่อตรวจสอบสถานะความอร่อย</p>
+
+        <div class="search-box">
+            <input type="tel" id="search-phone" class="form-control" placeholder="กรอกเบอร์โทรศัพท์ 10 หลัก...">
+            <button class="btn-search" onclick="searchOrders()">ค้นหาออเดอร์</button>
+        </div>
+
+        <div id="result-container">
+            <div class="no-result">กรุณากรอกเบอร์โทรศัพท์เพื่อค้นหาประวัติคำสั่งซื้อครับ</div>
+        </div>
+    </div>
+
+    <script>
+        function searchOrders() {
+            const phone = document.getElementById('search-phone').value.trim();
+            const container = document.getElementById('result-container');
+
+            if (!phone) {
+                alert('กรุณากรอกเบอร์โทรศัพท์ก่อนค้นหาครับ!');
+                return;
+            }
+
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const matchedOrders = orders.filter(o => o.phone === phone);
+
+            if (matchedOrders.length === 0) {
+                container.innerHTML = `<div class="no-result">❌ ไม่พบคำสั่งซื้อที่ตรงกับเบอร์โทรศัพท์ "${phone}" ครับ</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            matchedOrders.forEach((order, index) => {
+                const currentStatus = order.status || "กำลังเตรียมวัตถุดิบ";
+                const steps = ["กำลังเตรียมวัตถุดิบ", "กำลังย่างบนเตา", "กำลังจัดส่ง", "จัดส่งสำเร็จ"];
+                let activeIndex = steps.indexOf(currentStatus);
+                if (activeIndex === -1) activeIndex = 0;
+
+                let stepsHtml = '';
+                steps.forEach((stepName, sIdx) => {
+                    let statusClass = '';
+                    if (sIdx < activeIndex) statusClass = 'completed';
+                    else if (sIdx === activeIndex) statusClass = 'active';
+
+                    let iconSymbol = sIdx < activeIndex ? '✓' : (sIdx + 1);
+                    stepsHtml += `
+                        <div class="step ${statusClass}">
+                            <div class="step-icon">${iconSymbol}</div>
+                            <div class="step-text">${stepName}</div>
+                        </div>
+                    `;
+                });
+
+                let itemsList = order.items.map(i => `${i.name} (${i.price} ฿)`).join(', ');
+
+                const card = document.createElement('div');
+                card.className = 'order-card';
+                card.innerHTML = `
+                    <div class="order-header">
+                        <span class="order-id">ออเดอร์ # ${order.id || (index + 1)}</span>
+                        <span class="order-date">📅 ${order.date || 'วันนี้'}</span>
+                    </div>
+                    <div class="order-details">
+                        <p><strong>👤 ชื่อผู้รับ:</strong> ${order.name}</p>
+                        <p><strong>📦 รายการสินค้า:</strong> ${itemsList}</p>
+                        <p><strong>💰 ยอดชำระ:</strong> <span style="color:var(--gold-light);">${order.total} บาท</span> (${order.paymentMethod})</p>
+                        <p><strong>📍 ที่อยู่จัดส่ง:</strong> ${order.address}</p>
+                        ${order.note ? `<p><strong>📝 หมายเหตุ:</strong> ${order.note}</p>` : ''}
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-title">สถานะปัจจุบัน: <span style="color:var(--gold-light);">${currentStatus}</span></div>
+                        <div class="steps">
+                            ${stepsHtml}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
