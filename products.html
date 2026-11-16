@@ -17,10 +17,8 @@
 --text-sub: #d1c4c6;
 }
 
-
 * { box-sizing: border-box; transition: all 0.3s ease; }
 
-/* 🎨 นำภาพพื้นหลังพรีเมียมกลับมาแล้ว! */
 body { 
 font-family: 'Prompt', sans-serif; 
 background-color: var(--bg-dark); 
@@ -37,7 +35,8 @@ background-position: center;
 background-attachment: fixed;
 min-height: 100vh;
 }
-/* Navbar หรูหรา */
+
+/* Navbar ด้านบน (มีแค่ หน้าแรก และ เมนูอาหาร) */
 nav { 
 background: rgba(28, 16, 19, 0.92);
 backdrop-filter: blur(10px);
@@ -56,11 +55,95 @@ color: var(--text-sub);
 text-decoration: none; 
 font-weight: 500; 
 font-size: 17px; 
+display: inline-flex;
+align-items: center;
+gap: 8px;
 }
 nav a:hover, nav a.active { 
 color: var(--gold-light); 
 text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
+
+/* 🛒 ปุ่มรูปรถเข็นลอยอิสระอยู่ที่มุมบนขวา */
+.floating-cart-btn {
+position: fixed !important;
+top: 12px !important;
+right: 25px !important;
+width: auto !important;
+background: rgba(28, 16, 19, 0.95) !important;
+border: 2px solid var(--gold-light) !important;
+color: var(--gold-light) !important;
+padding: 8px 14px !important;
+border-radius: 50px !important;
+display: inline-flex !important;
+align-items: center !important;
+gap: 6px !important;
+cursor: pointer !important;
+z-index: 2000 !important;
+box-shadow: 0 4px 20px rgba(0,0,0,0.8) !important;
+backdrop-filter: blur(8px);
+font-size: 20px !important;
+}
+.floating-cart-btn:hover {
+transform: scale(1.08);
+background: var(--card-bg) !important;
+}
+.floating-cart-badge {
+background: #d32f2f;
+color: white;
+font-size: 13px;
+font-weight: bold;
+padding: 2px 8px;
+border-radius: 50px;
+}
+
+/* 📋 Modal พรีวิวตะกร้าสินค้า (Mini Cart) */
+.mini-cart-overlay {
+display: none;
+position: fixed;
+top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(0, 0, 0, 0.75);
+backdrop-filter: blur(5px);
+z-index: 3000;
+justify-content: center;
+align-items: center;
+}
+.mini-cart-box {
+background: var(--card-bg);
+border: 2px solid var(--gold-light);
+border-radius: 16px;
+padding: 25px;
+max-width: 450px;
+width: 90%;
+max-height: 80vh;
+display: flex;
+flex-direction: column;
+box-shadow: 0 15px 40px rgba(218, 41, 28, 0.6);
+text-align: left;
+position: relative;
+}
+.mini-cart-box h3 { color: var(--gold-light); margin-top: 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
+.close-mini-cart {
+background: none !important; border: none !important; color: var(--text-sub) !important; font-size: 24px !important; cursor: pointer !important; width: auto !important; padding: 0 !important;
+}
+.close-mini-cart:hover { color: var(--gold-light) !important; }
+.mini-cart-items {
+overflow-y: auto;
+max-height: 250px;
+margin: 15px 0;
+padding: 0;
+list-style: none;
+}
+.mini-cart-items li {
+border-bottom: 1px solid rgba(255,255,255,0.08);
+padding: 10px 0;
+display: flex;
+justify-content: space-between;
+align-items: center;
+color: var(--text-sub);
+font-size: 14px;
+}
+
 .section-title { 
 color: var(--gold-light); 
 margin-top: 50px; 
@@ -70,6 +153,7 @@ letter-spacing: 1px;
 text-shadow: 0 2px 10px rgba(218, 41, 28, 0.6);
 }
 .menu-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; padding: 15px 20px; max-width: 1100px; margin: 0 auto; }
+
 /* การ์ดสินค้าพรีเมียม */
 .card { 
 position: relative;
@@ -89,7 +173,6 @@ transform: translateY(-5px);
 border-color: var(--gold-light);
 box-shadow: 0 12px 25px rgba(218, 41, 28, 0.4);
 }
-/* Badge แสดงจำนวนสินค้า */
 .badge {
 position: absolute;
 top: -8px;
@@ -114,11 +197,10 @@ display: none;
 .card h3 { color: #ffffff; font-size: 1.15rem; margin: 12px 0 6px 0; }
 .price { color: var(--gold-light); font-weight: bold; font-size: 1.2rem; margin: 8px 0; }
 select { width: 100%; padding: 10px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--card-border); background: rgba(18, 8, 10, 0.9); color: white; font-family: 'Prompt', sans-serif; }
-/* ปุ่มเพิ่มลงตะกร้า */
+
 button { background: linear-gradient(135deg, #d32f2f, #8b0000); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; font-size: 14px; font-family: 'Prompt', sans-serif; }
 button:hover { background: linear-gradient(135deg, #e53935, #b71c1c); }
 
-/* ปุ่มดูรายละเอียด */
 .btn-detail { background-color: rgba(1, 87, 155, 0.8); text-decoration: none; color: white; padding: 10px; border-radius: 8px; font-size: 14px; margin-bottom: 8px; display: block; font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
 .btn-detail:hover { background-color: #0288d1; }
 
@@ -165,29 +247,60 @@ border-radius: 8px;
 display: flex;
 justify-content: space-between;
 align-items: center;
-cursor: pointer;
 }
-.addon-card:hover {
-border-color: var(--gold-light);
-}
-.addon-card label {
-cursor: pointer;
+.addon-info {
 display: flex;
-align-items: center;
-gap: 10px;
+flex-direction: column;
+gap: 4px;
+}
+.addon-name {
 color: var(--text-main);
 font-size: 14px;
-width: 100%;
+font-weight: 500;
 }
 .addon-price {
 color: var(--gold-light);
 font-weight: bold;
-white-space: nowrap;
+font-size: 13px;
 }
+.qty-control {
+display: flex;
+align-items: center;
+gap: 6px;
+background: rgba(0,0,0,0.4);
+border: 1px solid var(--card-border);
+border-radius: 8px;
+padding: 3px 6px;
+}
+.qty-btn {
+background: #333 !important;
+color: white !important;
+border: none !important;
+width: 24px !important;
+height: 24px !important;
+border-radius: 4px !important;
+cursor: pointer !important;
+font-weight: bold !important;
+font-size: 13px !important;
+display: flex !important;
+align-items: center !important;
+justify-content: center !important;
+padding: 0 !important;
+}
+.qty-btn:hover { background: var(--maroon-accent) !important; }
+.qty-display {
+color: white;
+font-weight: bold;
+font-size: 14px;
+min-width: 20px;
+text-align: center;
+}
+
 .btn-add-addons {
 background: linear-gradient(135deg, #2e7d32, #1b5e20);
 margin-top: 25px;
 font-size: 16px;
+width: 100% !important;
 }
 .btn-add-addons:hover {
 background: linear-gradient(135deg, #388e3c, #2e7d32);
@@ -198,14 +311,12 @@ background: linear-gradient(135deg, #388e3c, #2e7d32);
 .cart-box h3 { color: var(--gold-light); }
 .cart-box ul { list-style: none; padding: 0; text-align: left; }
 .cart-box li { border-bottom: 1px solid var(--card-border); padding: 12px 0; display: flex; justify-content: space-between; align-items: center; color: var(--text-sub); }
-.btn-delete { background: #5c061c; padding: 6px 12px; font-size: 12px; width: auto; border-radius: 6px; }
-.btn-delete:hover { background: #800020; }
+.btn-delete { background: #5c061c !important; padding: 6px 12px !important; font-size: 12px !important; width: auto !important; border-radius: 6px !important; color: white !important; }
+.btn-delete:hover { background: #800020 !important; }
 .btn-checkout { background: linear-gradient(135deg, #2e7d32, #1b5e20); padding: 14px; font-size: 18px; width: 100%; margin-top: 20px; border: none; cursor: pointer; color: white; display: block; border-radius: 10px; box-sizing: border-box; font-weight: bold; text-align: center; font-family: 'Prompt', sans-serif; }
 .btn-checkout:hover { background: linear-gradient(135deg, #388e3c, #2e7d32); }
 
-/* -------------------------------------------------------------
-   ✨ สไตล์สำหรับ Pop-up ยืนยันการสั่งซื้อ
-------------------------------------------------------------- */
+/* Pop-up ทั่วไป & ยืนยันการสั่งซื้อ */
 .confirm-modal-overlay {
 display: none;
 position: fixed;
@@ -231,38 +342,46 @@ box-shadow: 0 15px 40px rgba(218, 41, 28, 0.6);
 .confirm-btn-group { display: flex; gap: 15px; }
 .btn-confirm-yes {
 background: linear-gradient(135deg, #2e7d32, #1b5e20);
-color: white;
-border: none;
-padding: 12px;
-border-radius: 8px;
-font-weight: bold;
-cursor: pointer;
-flex: 1;
-font-size: 15px;
-font-family: 'Prompt', sans-serif;
+color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; flex: 1; font-size: 15px; font-family: 'Prompt', sans-serif;
 }
 .btn-confirm-yes:hover { background: linear-gradient(135deg, #388e3c, #2e7d32); }
 .btn-confirm-no {
 background: rgba(255,255,255,0.1);
-color: white;
-border: 1px solid var(--card-border);
-padding: 12px;
-border-radius: 8px;
-font-weight: bold;
-cursor: pointer;
-flex: 1;
-font-size: 15px;
-font-family: 'Prompt', sans-serif;
+color: white; border: 1px solid var(--card-border); padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; flex: 1; font-size: 15px; font-family: 'Prompt', sans-serif;
 }
 .btn-confirm-no:hover { background: rgba(255,255,255,0.2); }
 </style>
 </head>
 <body>
 
+<!-- 🛒 ปุ่มรูปรถเข็นลอยมุมบนขวาอิสระ -->
+<button class="floating-cart-btn" onclick="openMiniCart()">
+    🛒 <span id="floating-cart-count" class="floating-cart-badge">0</span>
+</button>
+
+<!-- 📋 Modal พรีวิวตะกร้าสินค้า (Mini Cart Popup) -->
+<div id="mini-cart-modal" class="mini-cart-overlay" onclick="closeMiniCartOnOverlay(event)">
+    <div class="mini-cart-box">
+        <h3>
+            <span>🛒 ตะกร้าสินค้าของคุณ</span>
+            <button class="close-mini-cart" onclick="closeMiniCart()">×</button>
+        </h3>
+        <ul id="mini-cart-list" class="mini-cart-items">
+            <li style="color: var(--text-sub); text-align: center; width: 100%;">ยังไม่มีสินค้าในตะกร้า...</li>
+        </ul>
+        <hr style="border-color: var(--card-border); width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0; font-size: 1.1rem;">
+            <span>ยอดรวมทั้งสิ้น:</span>
+            <strong id="mini-total-price" style="color: var(--gold-light);">0 บาท</strong>
+        </div>
+        <button class="btn-checkout" onclick="closeMiniCart(); checkOutWithConfirm();" style="margin-top: 10px;">ไปที่หน้าชำระเงิน 👉</button>
+    </div>
+</div>
+
+<!-- Navbar ด้านบนมีเฉพาะ หน้าแรก และ เมนูอาหาร -->
 <nav>
-<a href="index.html">🏠 หน้าแรก</a>
-<a href="products.html" class="active">🍖 เมนูอาหาร</a>
-<a href="checkout.html">🛒 ตะกร้าสินค้า</a>
+    <a href="index.html">🏠 หน้าแรก</a>
+    <a href="products.html" class="active">🍖 เมนูอาหาร</a>
 </nav>
 
 <!-- 1. เซกชันชุดหมูกระทะ -->
@@ -426,87 +545,49 @@ font-family: 'Prompt', sans-serif;
 ============================================================= -->
 <div class="addons-container">
 <h3 class="addons-title">✨ เลือกสั่งวัตถุดิบ & ท็อปปิ้งเพิ่มตามใจชอบ</h3>
+
 <!-- หมวดเนื้อสัตว์ -->
 <div class="addon-group-title">🥩 หมวดเนื้อสัตว์สดเพิ่ม</div>
 <div class="addon-grid">
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="หมูหมักนุ่มพิเศษ" data-price="39"> หมูหมักนุ่มพิเศษ</label>
-<span class="addon-price">+39 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="สามชั้นสไลด์" data-price="49"> สามชั้นสไลด์</label>
-<span class="addon-price">+49 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="ตู้มซีฟู้ด (กุ้ง/หมึกสด)" data-price="59"> ตู้มซีฟู้ด (กุ้ง/หมึกสด)</label>
-<span class="addon-price">+59 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="ตับหมูสด" data-price="39"> ตับหมูสด</label>
-<span class="addon-price">+39 ฿</span>
-</div>
+    <div class="addon-card">
+        <div class="addon-info"><span class="addon-name">หมูหมักนุ่มพิเศษ</span><span class="addon-price">+39 ฿</span></div>
+        <div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('หมูหมักนุ่มพิเศษ', -1)">-</button><span id="qty-หมูหมักนุ่มพิเศษ" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('หมูหมักนุ่มพิเศษ', 1)">+</button></div>
+    </div>
+    <div class="addon-card">
+        <div class="addon-info"><span class="addon-name">สามชั้นสไลด์</span><span class="addon-price">+49 ฿</span></div>
+        <div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('สามชั้นสไลด์', -1)">-</button><span id="qty-สามชั้นสไลด์" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('สามชั้นสไลด์', 1)">+</button></div>
+    </div>
+    <div class="addon-card">
+        <div class="addon-info"><span class="addon-name">ตู้มซีฟู้ด (กุ้ง/หมึกสด)</span><span class="addon-price">+59 ฿</span></div>
+        <div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('ตู้มซีฟู้ด (กุ้ง/หมึกสด)', -1)">-</button><span id="qty-ตู้มซีฟู้ด (กุ้ง/หมึกสด)" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('ตู้มซีฟู้ด (กุ้ง/หมึกสด)', 1)">+</button></div>
+    </div>
+    <div class="addon-card">
+        <div class="addon-info"><span class="addon-name">ตับหมูสด</span><span class="addon-price">+39 ฿</span></div>
+        <div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('ตับหมูสด', -1)">-</button><span id="qty-ตับหมูสด" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('ตับหมูสด', 1)">+</button></div>
+    </div>
 </div>
 
 <!-- หมวดวัตถุดิบต้ม/ลูกชิ้น -->
 <div class="addon-group-title">🍢 หมวดวัตถุดิบต้ม / ลูกชิ้น (Toppings)</div>
 <div class="addon-grid">
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="ไข่ไก่สด" data-price="12"> ไข่ไก่สด</label>
-<span class="addon-price">+12 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="ไข่ต้ม" data-price="15"> ไข่ต้ม</label>
-<span class="addon-price">+15 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="ชุดผักสดรวม" data-price="20"> ชุดผักสดรวม</label>
-<span class="addon-price">+20 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="วุ้นเส้น" data-price="20"> วุ้นเส้น</label>
-<span class="addon-price">+20 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="บะหมี่กึ่งสำเร็จรูป (มาม่า)" data-price="9"> มาม่า</label>
-<span class="addon-price">+9 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="ลูกชิ้นปลา" data-price="10"> ลูกชิ้นปลา</label>
-<span class="addon-price">+10 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="เต้าหู้ปลา" data-price="10"> เต้าหู้ปลา</label>
-<span class="addon-price">+10 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="ชีสบอล" data-price="20"> ชีสบอล</label>
-<span class="addon-price">+20 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="เห็ดเข็มทอง" data-price="8"> เห็ดเข็มทอง</label>
-<span class="addon-price">+8 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="เห็ดออรินจิ" data-price="10"> เห็ดออรินจิ</label>
-<span class="addon-price">+10 ฿</span>
-</div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">ไข่ไก่สด</span><span class="addon-price">+12 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('ไข่ไก่สด', -1)">-</button><span id="qty-ไข่ไก่สด" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('ไข่ไก่สด', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">ไข่ต้ม</span><span class="addon-price">+15 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('ไข่ต้ม', -1)">-</button><span id="qty-ไข่ต้ม" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('ไข่ต้ม', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">ชุดผักสดรวม</span><span class="addon-price">+20 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('ชุดผักสดรวม', -1)">-</button><span id="qty-ชุดผักสดรวม" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('ชุดผักสดรวม', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">วุ้นเส้น</span><span class="addon-price">+20 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('วุ้นเส้น', -1)">-</button><span id="qty-วุ้นเส้น" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('วุ้นเส้น', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">มาม่า</span><span class="addon-price">+9 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('มาม่า', -1)">-</button><span id="qty-มาม่า" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('มาม่า', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">ลูกชิ้นปลา</span><span class="addon-price">+10 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('ลูกชิ้นปลา', -1)">-</button><span id="qty-ลูกชิ้นปลา" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('ลูกชิ้นปลา', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">เต้าหู้ปลา</span><span class="addon-price">+10 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('เต้าหู้ปลา', -1)">-</button><span id="qty-เต้าหู้ปลา" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('เต้าหู้ปลา', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">ชีสบอล</span><span class="addon-price">+20 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('ชีสบอล', -1)">-</button><span id="qty-ชีสบอล" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('ชีสบอล', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">เห็ดเข็มทอง</span><span class="addon-price">+8 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('เห็ดเข็มทอง', -1)">-</button><span id="qty-เห็ดเข็มทอง" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('เห็ดเข็มทอง', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">เห็ดออรินจิ</span><span class="addon-price">+10 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('เห็ดออรินจิ', -1)">-</button><span id="qty-เห็ดออรินจิ" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('เห็ดออรินจิ', 1)">+</button></div></div>
 </div>
 
 <!-- หมวดน้ำจิ้ม/น้ำซุป -->
 <div class="addon-group-title">🥣 หมวดน้ำจิ้มและน้ำซุป (Sauces & Soups)</div>
 <div class="addon-grid">
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="น้ำจิ้มสูตรเด็ด (เพิ่มถ้วยโต)" data-price="39"> น้ำจิ้มสูตรเด็ด (ถ้วยโต)</label>
-<span class="addon-price">+39 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="น้ำซุปกระดูกหมูเข้มข้น" data-price="59"> น้ำซุปกระดูกหมูเข้มข้น</label>
-<span class="addon-price">+59 ฿</span>
-</div>
-<div class="addon-card">
-<label><input type="checkbox" class="addon-checkbox" data-name="ชีสยืดกระทะร้อน" data-price="30"> ชีสยืดกระทะร้อน</label>
-<span class="addon-price">+30 ฿</span>
-</div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">น้ำจิ้มสูตรเด็ด (ถ้วยโต)</span><span class="addon-price">+39 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('น้ำจิ้มสูตรเด็ด (ถ้วยโต)', -1)">-</button><span id="qty-น้ำจิ้มสูตรเด็ด (ถ้วยโต)" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('น้ำจิ้มสูตรเด็ด (ถ้วยโต)', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">น้ำซุปกระดูกหมูเข้มข้น</span><span class="addon-price">+59 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('น้ำซุปกระดูกหมูเข้มข้น', -1)">-</button><span id="qty-น้ำซุปกระดูกหมูเข้มข้น" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('น้ำซุปกระดูกหมูเข้มข้น', 1)">+</button></div></div>
+    <div class="addon-card"><div class="addon-info"><span class="addon-name">ชีสยืดกระทะร้อน</span><span class="addon-price">+30 ฿</span></div><div class="qty-control"><button class="qty-btn" onclick="changeAddonQty('ชีสยืดกระทะร้อน', -1)">-</button><span id="qty-ชีสยืดกระทะร้อน" class="qty-display">0</span><button class="qty-btn" onclick="changeAddonQty('ชีสยืดกระทะร้อน', 1)">+</button></div></div>
 </div>
 
 <button class="btn-add-addons" onclick="addSelectedAddonsToCart()">➕ เพิ่มวัตถุดิบที่เลือกเข้ารายการตะกร้า</button>
@@ -522,13 +603,10 @@ font-family: 'Prompt', sans-serif;
 <p><strong>ราคารวม: <span id="total-price" style="color: var(--gold-light);">0</span> บาท</strong></p>
 <button onclick="clearCart()" style="background-color: #333; width: auto; padding: 6px 12px; margin-bottom: 10px;">🗑️ ล้างตะกร้า</button>
 
-<!-- เปลี่ยนจากลิงก์ตรงๆ เป็นเรียกฟังก์ชันเปิด Pop-up ยืนยัน -->
 <button class="btn-checkout" onclick="checkOutWithConfirm()">ไปที่หน้าชำระเงิน 👉</button>
 </div>
 
-<!-- =============================================================
-     ✨ Pop-up ยืนยันการสั่งซื้อ
-============================================================= -->
+<!-- Pop-up ยืนยันการสั่งซื้อ -->
 <div id="confirm-modal" class="confirm-modal-overlay">
 <div class="confirm-modal-box">
 <h3>🔥 ยืนยันการสั่งซื้อออเดอร์</h3>
@@ -540,113 +618,203 @@ font-family: 'Prompt', sans-serif;
 </div>
 </div>
 
+<!-- 🌟 Custom Alert Modal (แทนที่ alert ของเบราว์เซอร์) -->
+<div id="custom-alert-modal" class="confirm-modal-overlay" onclick="closeCustomAlertOnOverlay(event)">
+<div class="confirm-modal-box">
+<h3 id="custom-alert-title" style="color: var(--gold-light); margin-top: 0; font-size: 1.4rem;">แจ้งเตือน</h3>
+<p id="custom-alert-msg" style="color: var(--text-sub); font-size: 1rem; margin: 15px 0 25px 0; line-height: 1.6;">ข้อความแจ้งเตือน</p>
+<button class="btn-confirm-yes" onclick="closeCustomAlert()" style="width: 100%;">ตกลง</button>
+</div>
+</div>
+
 <script>
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+const addonPrices = {
+    "หมูหมักนุ่มพิเศษ": 39,
+    "สามชั้นสไลด์": 49,
+    "ตู้มซีฟู้ด (กุ้ง/หมึกสด)": 59,
+    "ตับหมูสด": 39,
+    "ไข่ไก่สด": 12,
+    "ไข่ต้ม": 15,
+    "ชุดผักสดรวม": 20,
+    "วุ้นเส้น": 20,
+    "มาม่า": 9,
+    "ลูกชิ้นปลา": 10,
+    "เต้าหู้ปลา": 10,
+    "ชีสบอล": 20,
+    "เห็ดเข็มทอง": 8,
+    "เห็ดออรินจิ": 10,
+    "น้ำจิ้มสูตรเด็ด (ถ้วยโต)": 39,
+    "น้ำซุปกระดูกหมูเข้มข้น": 59,
+    "ชีสยืดกระทะร้อน": 30
+};
+
+let addonQtys = {};
+Object.keys(addonPrices).forEach(name => addonQtys[name] = 0);
+
+function changeAddonQty(name, amount) {
+    addonQtys[name] = Math.max(0, addonQtys[name] + amount);
+    document.getElementById(`qty-${name}`).textContent = addonQtys[name];
+}
+
+/* 🌟 ฟังก์ชัน Custom Alert แทน alert() เดิม */
+function showCustomAlert(title, message) {
+    document.getElementById('custom-alert-title').textContent = title;
+    document.getElementById('custom-alert-msg').textContent = message;
+    document.getElementById('custom-alert-modal').style.display = 'flex';
+}
+function closeCustomAlert() {
+    document.getElementById('custom-alert-modal').style.display = 'none';
+}
+function closeCustomAlertOnOverlay(event) {
+    if (event.target.id === 'custom-alert-modal') {
+        closeCustomAlert();
+    }
+}
+
 function saveAndRender() {
-localStorage.setItem('cart', JSON.stringify(cart));
-renderCart();
-updateBadges();
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+    updateBadges();
 }
 
 function addToCart(name, price) {
-cart.push({ name, price, baseName: name });
-saveAndRender();
+    cart.push({ name, price, baseName: name });
+    saveAndRender();
 }
 
 function addDrinkWithOption(drinkName, selectId) {
-const selectEl = document.getElementById(selectId);
-const price = parseInt(selectEl.value);
-const sizeText = price === 25 ? 'ขวดเล็ก' : 'ขวดใหญ่';
-cart.push({ name: `${drinkName} (${sizeText})`, price: price, baseName: drinkName });
-saveAndRender();
+    const selectEl = document.getElementById(selectId);
+    const price = parseInt(selectEl.value);
+    const sizeText = price === 25 ? 'ขวดเล็ก' : 'ขวดใหญ่';
+    cart.push({ name: `${drinkName} (${sizeText})`, price: price, baseName: drinkName });
+    saveAndRender();
 }
 
 function addSelectedAddonsToCart() {
-const checkboxes = document.querySelectorAll('.addon-checkbox:checked');
-if (checkboxes.length === 0) {
-alert('กรุณาติ๊กเลือกวัตถุดิบที่ต้องการเพิ่มก่อนครับ!');
-return;
-}
+    let addedCount = 0;
+    Object.keys(addonQtys).forEach(name => {
+        let qty = addonQtys[name];
+        if (qty > 0) {
+            let price = addonPrices[name];
+            for (let i = 0; i < qty; i++) {
+                cart.push({ name: '✨ ' + name, price: price, baseName: name });
+            }
+            addonQtys[name] = 0;
+            document.getElementById(`qty-${name}`).textContent = 0;
+            addedCount++;
+        }
+    });
 
-checkboxes.forEach(cb => {
-const name = cb.getAttribute('data-name');
-const price = parseFloat(cb.getAttribute('data-price'));
-cart.push({ name: '✨ ' + name, price: price, baseName: name });
-cb.checked = false;
-});
+    if (addedCount === 0) {
+        showCustomAlert('⚠️ แจ้งเตือน', 'กรุณากดเพิ่มจำนวนวัตถุดิบที่ต้องการก่อนครับ!');
+        return;
+    }
 
-saveAndRender();
-alert('เพิ่มวัตถุดิบเสริมลงในตะกร้าเรียบร้อยแล้ว!');
+    saveAndRender();
+    showCustomAlert('🎉 สำเร็จ', 'เพิ่มวัตถุดิบเสริมลงในตะกร้าเรียบร้อยแล้ว!');
 }
 
 function removeFromCart(index) {
-cart.splice(index, 1);
-saveAndRender();
+    cart.splice(index, 1);
+    saveAndRender();
 }
 
 function clearCart() {
-cart = [];
-saveAndRender();
+    cart = [];
+    saveAndRender();
 }
 
 function renderCart() {
-const list = document.getElementById('cart-list');
-const totalEl = document.getElementById('total-price');
-list.innerHTML = '';
-let total = 0;
-if (cart.length === 0) {
-list.innerHTML = '<li style="color: var(--text-sub);">ยังไม่มีสินค้าในตะกร้า...</li>';
-} else {
-cart.forEach((item, index) => {
-total += item.price;
-const li = document.createElement('li');
-li.innerHTML = `
-<span>${item.name} - ${item.price} บาท</span>
-<button class="btn-delete" onclick="removeFromCart(${index})">ลบ</button>
-`;
-list.appendChild(li);
-});
-}
-totalEl.textContent = total;
+    const list = document.getElementById('cart-list');
+    const totalEl = document.getElementById('total-price');
+    
+    const miniList = document.getElementById('mini-cart-list');
+    const miniTotalEl = document.getElementById('mini-total-price');
+    const floatingCountEl = document.getElementById('floating-cart-count');
+
+    list.innerHTML = '';
+    miniList.innerHTML = '';
+    let total = 0;
+    let totalCount = cart.length;
+
+    floatingCountEl.textContent = totalCount;
+
+    if (cart.length === 0) {
+        list.innerHTML = '<li style="color: var(--text-sub);">ยังไม่มีสินค้าในตะกร้า...</li>';
+        miniList.innerHTML = '<li style="color: var(--text-sub); text-align: center; width: 100%;">ยังไม่มีสินค้าในตะกร้า...</li>';
+        miniTotalEl.textContent = '0 บาท';
+    } else {
+        cart.forEach((item, index) => {
+            total += item.price;
+            
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${item.name} (${item.price} บาท)</span>
+                <button class="btn-delete" onclick="removeFromCart(${index})">ลบ</button>
+            `;
+            list.appendChild(li);
+
+            const miniLi = document.createElement('li');
+            miniLi.innerHTML = `
+                <span>${item.name}</span>
+                <strong style="color: var(--gold-light);">${item.price} ฿</strong>
+            `;
+            miniList.appendChild(miniLi);
+        });
+        miniTotalEl.textContent = total + ' บาท';
+    }
+    totalEl.textContent = total;
 }
 
 function updateBadges() {
-const counts = {};
-cart.forEach(item => {
-const key = item.baseName || item.name;
-counts[key] = (counts[key] || 0) + 1;
-});
+    const counts = {};
+    cart.forEach(item => {
+        const key = item.baseName || item.name;
+        counts[key] = (counts[key] || 0) + 1;
+    });
 
-const allBadges = document.querySelectorAll('.badge');
-allBadges.forEach(badge => {
-const badgeId = badge.id.replace('badge-', '');
-const count = counts[badgeId] || 0;
+    const allBadges = document.querySelectorAll('.badge');
+    allBadges.forEach(badge => {
+        const badgeId = badge.id.replace('badge-', '');
+        const count = counts[badgeId] || 0;
 
-if (count > 0) {
-badge.textContent = count;
-badge.style.display = 'flex';
-} else {
-badge.style.display = 'none';
+        if (count > 0) {
+            badge.textContent = count;
+            badge.style.display = 'flex';
+        } else {
+            badge.style.display = 'none';
+        }
+    });
 }
-});
+
+function openMiniCart() {
+    document.getElementById('mini-cart-modal').style.display = 'flex';
+}
+function closeMiniCart() {
+    document.getElementById('mini-cart-modal').style.display = 'none';
+}
+function closeMiniCartOnOverlay(event) {
+    if (event.target.id === 'mini-cart-modal') {
+        closeMiniCart();
+    }
 }
 
-/* ฟังก์ชันควบคุม Pop-up ยืนยันการสั่งซื้อ */
 function checkOutWithConfirm() {
-if (cart.length === 0) {
-alert('ยังไม่มีสินค้าในตะกร้า กรุณาเลือกสินค้าก่อนครับ!');
-return;
-}
-document.getElementById('confirm-modal').style.display = 'flex';
+    if (cart.length === 0) {
+        showCustomAlert('🛒 ตะกร้าว่าง', 'ยังไม่มีสินค้าในตะกร้า กรุณาเลือกสินค้าก่อนครับ!');
+        return;
+    }
+    document.getElementById('confirm-modal').style.display = 'flex';
 }
 
 function closeConfirmModal() {
-document.getElementById('confirm-modal').style.display = 'none';
+    document.getElementById('confirm-modal').style.display = 'none';
 }
 
 function proceedToCheckout() {
-window.location.href = 'checkout.html';
+    window.location.href = 'checkout.html';
 }
 
 renderCart();
