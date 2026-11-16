@@ -81,8 +81,26 @@
             margin-bottom: 30px;
         }
         .ingredients-box h3 { color: var(--gold-light); margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
-        .ingredients-box ul { margin: 0; padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 1.05rem; }
-        .ingredients-box ul li { margin-bottom: 8px; color: #ffffff; }
+        
+        /* สไตล์สำหรับ Checkbox วัตถุดิบ */
+        .ingredient-list { list-style: none; padding: 0; margin: 0; }
+        .ingredient-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 10px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            font-size: 1.05rem; 
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .ingredient-item:last-child { border-bottom: none; }
+        .ingredient-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--maroon-accent);
+            cursor: pointer;
+        }
 
         .btn-group { display: flex; gap: 15px; }
         .btn-back {
@@ -183,8 +201,14 @@
 
         if (product) {
             let ingredientsHtml = '';
-            product.ingredients.forEach(ing => {
-                ingredientsHtml += `<li>✨ ${ing}</li>`;
+            product.ingredients.forEach((ing, index) => {
+                // สร้าง checkbox โดยค่าเริ่มต้นถูกติ๊กเลือก (checked) ลูกค้าสามารถกดเอาติ๊กออกได้
+                ingredientsHtml += `
+                    <label class="ingredient-item">
+                        <input type="checkbox" class="ing-checkbox" value="${ing}" checked>
+                        <span>✨ ${ing}</span>
+                    </label>
+                `;
             });
 
             container.innerHTML = `
@@ -194,10 +218,10 @@
                 <p style="color:var(--text-sub); margin-bottom: 25px; font-size: 1.1rem;">${product.desc}</p>
                 
                 <div class="ingredients-box">
-                    <h3>📋 รายละเอียดวัตถุดิบภายในเซ็ต</h3>
-                    <ul>
+                    <h3>📋 รายละเอียดวัตถุดิบภายในเซ็ต (ติ๊กเลือกสิ่งที่ไม่รับออกได้)</h3>
+                    <div class="ingredient-list">
                         ${ingredientsHtml}
-                    </ul>
+                    </div>
                 </div>
 
                 <div class="btn-group">
@@ -210,10 +234,24 @@
         }
 
         function addToCart(name, price) {
+            // รวบรวมวัตถุดิบที่ลูกค้าติ๊กเลือก
+            const checkboxes = document.querySelectorAll('.ing-checkbox');
+            let selectedIngredients = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedIngredients.push(cb.value);
+                }
+            });
+
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.push({ name: name, price: price, baseName: name });
+            cart.push({ 
+                name: name, 
+                price: price, 
+                ingredients: selectedIngredients // บันทึกรายการวัตถุดิบที่ลูกค้าเลือกเข้าตะกร้าด้วย
+            });
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert('เพิ่ม "' + name + '" ลงในตะกร้าเรียบร้อยแล้ว!');
+            
+            alert('เพิ่ม "' + name + '" พร้อมรายการที่ปรับแต่งลงในตะกร้าเรียบร้อยแล้ว!');
             window.location.href = 'products.html';
         }
     </script>
