@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ชำระเงิน - หมูกระทะย่างให้</title>
+    <!-- ฟอนต์ Prompt สุดพรีเมียม -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -69,25 +70,24 @@
             margin-bottom: 25px;
         }
         .cart-summary h3 { margin-top: 0; color: var(--gold-light); font-size: 1.2rem; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
-        .cart-item-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+        .cart-item-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; color: var(--text-sub); }
         .cart-total-row { display: flex; justify-content: space-between; margin-top: 15px; font-size: 1.2rem; font-weight: 700; color: var(--gold-light); }
 
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-sub); }
-        .form-control { 
-            width: 100%; 
-            padding: 12px; 
-            border-radius: 10px; 
-            background: #12080a; 
-            border: 1px solid var(--card-border); 
-            color: white; 
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: #12080a;
+            color: white;
             font-family: 'Prompt', sans-serif;
             font-size: 15px;
             outline: none;
         }
         .form-control:focus { border-color: var(--gold-light); }
 
-        /* กล่องข้อมูลโอนเงิน */
         .bank-info-box {
             background: rgba(255, 215, 0, 0.05);
             border: 1px dashed var(--gold-light);
@@ -101,17 +101,17 @@
         }
         .bank-info-box span { color: var(--gold-light); font-weight: bold; }
 
-        .btn-submit { 
-            background: linear-gradient(135deg, #ffd700, #ff8c00); 
-            color: #12080a; 
-            border: none; 
-            padding: 15px; 
-            border-radius: 30px; 
+        .btn-submit {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #12080a;
+            border: none;
+            padding: 15px;
+            border-radius: 30px;
             font-family: 'Prompt', sans-serif;
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            cursor: pointer; 
-            width: 100%; 
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
             margin-top: 10px;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
         }
@@ -120,11 +120,11 @@
 </head>
 <body>
 
+    <!-- Navbar สำหรับลูกค้า (ไม่มีปุ่มจัดการระบบ) -->
     <nav>
         <a href="index.html">🏠 หน้าแรก</a>
         <a href="products.html">🍖 เมนูอาหาร</a>
         <a href="checkout.html" class="active">🛒 ตะกร้าสินค้า & ชำระเงิน</a>
-        <a href="admin.html">⚙️ จัดการระบบ</a>
     </nav>
 
     <div class="container">
@@ -159,129 +159,95 @@
                 <textarea id="cust-address" class="form-control" rows="3" placeholder="บ้านเลขที่, ซอย, ถนน, ตำบล, จังหวัด..." required></textarea>
             </div>
 
+            <!-- ช่องหมายเหตุเพิ่มเติม -->
+            <div class="form-group">
+                <label>📝 หมายเหตุเพิ่มเติม (ถ้ามี)</label>
+                <textarea id="cust-note" class="form-control" rows="2" placeholder="เช่น ขอช้อนส้อม, เผ็ดน้อย, หรือจุดสังเกตเพิ่มเติม..."></textarea>
+            </div>
+
             <div class="form-group">
                 <label>💳 ช่องทางการชำระเงิน</label>
                 <select id="payment-method" class="form-control" onchange="togglePaymentSection()">
                     <option value="โอนเงินผ่านธนาคาร">โอนเงินผ่านบัญชีธนาคาร (แนบสลิป)</option>
-                    <option value="เก็บเงินปลายทาง (COD)">เก็บเงินปลายทาง (COD)</option>
+                    <option value="เก็บเงินปลายทาง">ชำระเงินสดปลายทาง (COD)</option>
                 </select>
             </div>
 
-            <!-- ส่วนแสดงบัญชีและอัปโหลดสลิป (แสดงเฉพาะตอนเลือกโอนเงิน) -->
-            <div id="transfer-section">
-                <div class="bank-info-box">
-                    🏦 ธนาคารกสิกรไทย (KBANK) <br>
-                    เลขบัญชี: <span>123-4-56789-0</span> <br>
-                    ชื่อบัญชี: บจก. หมูกระทะย่างให้
-                </div>
-                <div class="form-group">
-                    <label>📎 แนบหลักฐานการโอนเงิน (สลิปโอนเงิน)</label>
-                    <input type="file" id="slip-file" class="form-control" accept="image/*">
+            <div id="bank-section" class="bank-info-box">
+                โอนเงินผ่านบัญชี: <span>ธนาคารไทยพาณิชย์ (SCB) 123-4-56789-0</span><br>
+                ชื่อบัญชี: ร้านหมูกระทะย่างให้<br>
+                <div style="margin-top: 10px;">
+                    <label style="color: var(--text-main); font-size: 13px; display: block; margin-bottom: 5px;">📷 แนบสลิปการโอนเงิน:</label>
+                    <input type="file" id="slip-file" class="form-control" accept="image/*" style="padding: 8px;">
                 </div>
             </div>
 
-            <button type="submit" class="btn-submit">🚀 ยืนยันการสั่งซื้อ</button>
+            <button type="submit" class="btn-submit">✅ ยืนยันการสั่งซื้อ</button>
         </form>
     </div>
 
     <script>
+        // โหลดข้อมูลตะกร้ามาแสดง
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const itemsListEl = document.getElementById('checkout-items-list');
+        const totalPriceEl = document.getElementById('checkout-total-price');
 
-        function renderCheckoutCart() {
-            const listEl = document.getElementById('checkout-items-list');
-            const totalEl = document.getElementById('checkout-total-price');
-            listEl.innerHTML = '';
-
+        function renderCheckout() {
+            itemsListEl.innerHTML = '';
             let total = 0;
             if (cart.length === 0) {
-                listEl.innerHTML = '<p style="color:var(--text-sub); text-align:center; margin:10px 0;">ยังไม่มีสินค้าในตะกร้า <a href="products.html" style="color:var(--gold-light);">ไปเลือกซื้อเมนูเลย!</a></p>';
-                totalEl.textContent = '0 ฿';
-                return;
+                itemsListEl.innerHTML = '<div class="cart-item-row"><span>ไม่มีสินค้าในตะกร้า</span><span>0 ฿</span></div>';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    const row = document.createElement('div');
+                    row.className = 'cart-item-row';
+                    row.innerHTML = `<span>${item.name}</span><span>${item.price} ฿</span>`;
+                    itemsListEl.appendChild(row);
+                });
             }
-
-            cart.forEach(item => {
-                total += item.price;
-                const row = document.createElement('div');
-                row.className = 'cart-item-row';
-                row.innerHTML = `
-                    <span>${item.name}</span>
-                    <span style="color:var(--gold-light); font-weight:600;">${item.price} ฿</span>
-                `;
-                listEl.appendChild(row);
-            });
-
-            totalEl.textContent = total + ' ฿';
+            totalPriceEl.textContent = total + ' ฿';
         }
 
         function togglePaymentSection() {
             const method = document.getElementById('payment-method').value;
-            const section = document.getElementById('transfer-section');
-            if (method.includes('ปลายทาง')) {
-                section.style.display = 'none';
+            const bankSection = document.getElementById('bank-section');
+            if (method === 'เก็บเงินปลายทาง') {
+                bankSection.style.display = 'none';
             } else {
-                section.style.display = 'block';
+                bankSection.style.display = 'block';
             }
         }
 
         function submitOrder(event) {
             event.preventDefault();
-
             if (cart.length === 0) {
-                alert('ตะกร้าสินค้าว่างเปล่า กรุณาเลือกสินค้าก่อนครับ!');
+                alert('กรุณาเลือกสินค้าก่อนทำการสั่งซื้อ!');
                 return;
             }
 
-            const name = document.getElementById('cust-name').value;
-            const phone = document.getElementById('cust-phone').value;
-            const address = document.getElementById('cust-address').value;
-            const paymentMethod = document.getElementById('payment-method').value;
-
-            let totalPrice = 0;
-            cart.forEach(item => totalPrice += item.price);
-
-            // จัดการเรื่องรูปสลิป (แปลงเป็น Base64 เพื่อเก็บใน LocalStorage ให้แอดมินกดดูได้)
-            const slipInput = document.getElementById('slip-file');
-            
-            if (paymentMethod.includes('โอนเงิน') && slipInput.files.length === 0) {
-                alert('กรุณาแนบสลิปการโอนเงินก่อนยืนยันคำสั่งซื้อครับ!');
-                return;
-            }
-
-            if (paymentMethod.includes('โอนเงิน') && slipInput.files.length > 0) {
-                const reader = new FileReader();
-                reader.readAsDataURL(slipInput.files[0]);
-                reader.onload = function () {
-                    saveOrderToStorage(name, phone, address, paymentMethod, totalPrice, reader.result);
-                };
-            } else {
-                saveOrderToStorage(name, phone, address, paymentMethod, totalPrice, null);
-            }
-        }
-
-        function saveOrderToStorage(name, phone, address, paymentMethod, totalPrice, slipData) {
-            let orders = JSON.parse(localStorage.getItem('orders')) || [];
-            
-            const newOrder = {
-                name: name,
-                phone: phone,
-                address: address,
-                paymentMethod: paymentMethod,
+            const orderData = {
+                name: document.getElementById('cust-name').value,
+                phone: document.getElementById('cust-phone').value,
+                address: document.getElementById('cust-address').value,
+                note: document.getElementById('cust-note').value,
+                paymentMethod: document.getElementById('payment-method').value,
                 items: cart,
-                totalPrice: totalPrice,
-                slip: slipData, // เก็บรูปสลิป
-                status: 'รอดำเนินการ (กำลังย่าง)',
+                total: cart.reduce((sum, item) => sum + item.price, 0),
                 date: new Date().toLocaleString()
             };
 
-            orders.push(newOrder);
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(orderData);
             localStorage.setItem('orders', JSON.stringify(orders));
-            localStorage.removeItem('cart'); // ล้างตะกร้า
 
-            alert('🎉 สั่งซื้อสินค้าสำเร็จแล้ว! ขอบคุณที่ใช้บริการ "หมูกระทะย่างให้" ครับ');
-            window.location.href = 'admin.html'; // พาไปดูที่หน้าแอดมินหรือหน้าสำเร็จ
+            localStorage.removeItem('cart');
+
+            alert('🎉 สั่งซื้อสินค้าเรียบร้อยแล้ว ขอบคุณที่ใช้บริการครับ!');
+            window.location.href = 'index.html';
         }
 
-        renderCheckoutCart();
+        renderCheckout();
     </script>
 </body>
 </html>
